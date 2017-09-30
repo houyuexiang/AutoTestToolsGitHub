@@ -1,0 +1,162 @@
+CodingSystem.Name,Test.Name,InboundValue,OutboundValue,SampleType.Name,CaseSensitive
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 16.0.2
+%% Table: TestCode
+%% Exported on: 09/07/17 at 10:16:32
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia 1650,ALT,004,004,?,no
+Advia 1650,AST,304,304,Serum,no
+Centaur XP,TSH,TSH,TSH,Serum,no
+Centaur XP,FER,FER,FER,Serum,no
+Advia 2120,FER,12,22,Serum,no
+Advia 2120,Slide,950,950,Whole blood,no
+Advia 120,ANISO,36,36,Whole blood,no
+Advia 120,ATYPS,43,43,Whole blood,no
+Advia 120,BASOp,24,24,Whole blood,no
+Advia 120,BLASTS,44,44,Whole blood,no
+Advia 120,CHCMg,915,915,Whole blood,no
+Advia 120,CHCMr,922,922,Whole blood,no
+Advia 120,CHCM,51,51,Whole blood,no
+Advia 120,CHDWg,920,920,Whole blood,no
+Advia 120,CHDWr,913,913,Whole blood,no
+Advia 120,CHg,919,919,Whole blood,no
+Advia 120,CHr,912,912,Whole blood,no
+Advia 120,CH,72,72,Whole blood,no
+Advia 120,EOSp,23,23,Whole blood,no
+Advia 120,HCVAR,39,39,Whole blood,no
+Advia 120,HDWg,918,918,Whole blood,no
+Advia 120,HDWr,924,924,Whole blood,no
+Advia 120,HDW,9,9,Whole blood,no
+Advia 120,HemImage,250,250,Whole blood,no
+Advia 120,HGB,3,3,Whole blood,no
+Advia 120,HYPER,41,41,Whole blood,no
+Advia 120,HYPO,40,40,Whole blood,no
+Advia 120,IG,75,75,Whole blood,no
+Advia 120,LI,26,26,Whole blood,no
+Advia 120,LPLT,76,76,Whole blood,no
+Advia 120,LS,42,42,Whole blood,no
+Advia 120,LUCp,25,25,Whole blood,no
+Advia 120,LYMp,21,21,Whole blood,no
+Advia 120,MACRO,38,38,Whole blood,no
+Advia 120,MCVg,914,914,Whole blood,no
+Advia 120,MCVr,921,921,Whole blood,no
+Advia 120,MCV,5,5,Whole blood,no
+Advia 120,MICRO,37,37,Whole blood,no
+Advia 120,MONOp,22,22,Whole blood,no
+Advia 120,MPO,82,82,Whole blood,no
+Advia 120,MPV,11,11,Whole blood,no
+Advia 120,MPXI,27,27,Whole blood,no
+Advia 120,NEUTp,20,20,Whole blood,no
+Advia 120,NEUTx,191,191,Whole blood,no
+Advia 120,NEUTy,192,192,Whole blood,no
+Advia 120,NRBC,79,79,Whole blood,no
+Advia 120,PCT,13,13,Whole blood,no
+Advia 120,PDW,12,12,Whole blood,no
+Advia 120,PLTCLM,81,81,Whole blood,no
+Advia 120,PLT,10,10,Whole blood,no
+Advia 120,RBCF,77,77,Whole blood,no
+Advia 120,RBCG,78,78,Whole blood,no
+Advia 120,RBC,2,2,Whole blood,no
+Advia 120,RDWg,917,917,Whole blood,no
+Advia 120,RDWr,923,923,Whole blood,no
+Advia 120,RDW,8,8,Whole blood,no
+Advia 120,RETICc,911,911,Whole blood,no
+Advia 120,RETICp,910,910,Whole blood,no
+Advia 120,RTCRBC,916,916,Whole blood,no
+Advia 120,sf#EOS,513,513,CSF,no
+Advia 120,sf#LYM,511,511,CSF,no
+Advia 120,sf#MN,509,509,CSF,no
+Advia 120,sf#MON,512,512,CSF,no
+Advia 120,sf#NEU,510,510,CSF,no
+Advia 120,sf#PMN,508,508,CSF,no
+Advia 120,sf%EOS,507,507,CSF,no
+Advia 120,sf%LYM,505,505,CSF,no
+Advia 120,sf%MN,503,503,CSF,no
+Advia 120,sf%MON,506,506,CSF,no
+Advia 120,sf%NEU,504,504,CSF,no
+Advia 120,sf%PMN,502,502,CSF,no
+Advia 120,sfRBC,514,514,CSF,no
+Advia 120,sfWBC,501,501,CSF,no
+Advia 120,WBCB,52,52,Whole blood,no
+Advia 120,WBCP,50,50,Whole blood,no
+Advia 120,WBC,1,1,Whole blood,no
+Advia 2120,ANISO,36,36,Whole blood,no
+Advia 2120,ATYPS,43,43,Whole blood,no
+Advia 2120,BASOp,24,24,Whole blood,no
+Advia 2120,BLASTS,44,44,Whole blood,no
+Advia 2120,CHCMg,915,915,Whole blood,no
+Advia 2120,CHCMr,922,922,Whole blood,no
+Advia 2120,CHCM,51,51,Whole blood,no
+Advia 2120,CHDWg,920,920,Whole blood,no
+Advia 2120,CHDWr,913,913,Whole blood,no
+Advia 2120,CHg,919,919,Whole blood,no
+Advia 2120,CHr,912,912,Whole blood,no
+Advia 2120,CH,72,72,Whole blood,no
+Advia 2120,EOSp,23,23,Whole blood,no
+Advia 2120,HCVAR,39,39,Whole blood,no
+Advia 2120,HDWg,918,918,Whole blood,no
+Advia 2120,HDWr,924,924,Whole blood,no
+Advia 2120,HDW,9,9,Whole blood,no
+Advia 2120,HemImage,250,250,Whole blood,no
+Advia 2120,HGB,3,3,Whole blood,no
+Advia 2120,HYPER,41,41,Whole blood,no
+Advia 2120,HYPO,40,40,Whole blood,no
+Advia 2120,IG,75,75,Whole blood,no
+Advia 2120,LI,26,26,Whole blood,no
+Advia 2120,LPLT,76,76,Whole blood,no
+Advia 2120,LS,42,42,Whole blood,no
+Advia 2120,LUCp,25,25,Whole blood,no
+Advia 2120,LYMp,21,21,Whole blood,no
+Advia 2120,MACRO,38,38,Whole blood,no
+Advia 2120,MCVg,914,914,Whole blood,no
+Advia 2120,MCVr,921,921,Whole blood,no
+Advia 2120,MCV,5,5,Whole blood,no
+Advia 2120,MICRO,37,37,Whole blood,no
+Advia 2120,MONOp,22,22,Whole blood,no
+Advia 2120,MPO,82,82,Whole blood,no
+Advia 2120,MPV,11,11,Whole blood,no
+Advia 2120,MPXI,27,27,Whole blood,no
+Advia 2120,NEUTp,20,20,Whole blood,no
+Advia 2120,NEUTx,191,191,Whole blood,no
+Advia 2120,NEUTy,192,192,Whole blood,no
+Advia 2120,NRBC,79,79,Whole blood,no
+Advia 2120,NRBCp,28,28,Whole blood,no
+Advia 2120,PCT,13,13,Whole blood,no
+Advia 2120,PDW,12,12,Whole blood,no
+Advia 2120,PLTCLM,81,81,Whole blood,no
+Advia 2120,PLT,10,10,Whole blood,no
+Advia 2120,RBCF,77,77,Whole blood,no
+Advia 2120,RBCG,78,78,Whole blood,no
+Advia 2120,RBC,2,2,Whole blood,no
+Advia 2120,RDWg,917,917,Whole blood,no
+Advia 2120,RDWr,923,923,Whole blood,no
+Advia 2120,RDW,8,8,Whole blood,no
+Advia 2120,RETICc,911,911,Whole blood,no
+Advia 2120,RETICp,910,910,Whole blood,no
+Advia 2120,RTCRBC,916,916,Whole blood,no
+Advia 2120,sf#EOS,513,513,CSF,no
+Advia 2120,sf#LYM,511,511,CSF,no
+Advia 2120,sf#MN,509,509,CSF,no
+Advia 2120,sf#MON,512,512,CSF,no
+Advia 2120,sf#NEU,510,510,CSF,no
+Advia 2120,sf#PMN,508,508,CSF,no
+Advia 2120,sf%EOS,507,507,CSF,no
+Advia 2120,sf%LYM,505,505,CSF,no
+Advia 2120,sf%MN,503,503,CSF,no
+Advia 2120,sf%MON,506,506,CSF,no
+Advia 2120,sf%NEU,504,504,CSF,no
+Advia 2120,sf%PMN,502,502,CSF,no
+Advia 2120,sfRBC,514,514,CSF,no
+Advia 2120,sfWBC,501,501,CSF,no
+Advia 2120,WBCB,52,52,Whole blood,no
+Advia 2120,WBCP,50,50,Whole blood,no
+Advia 2120,WBC,1,1,Whole blood,no
+Advia 1650,ALB,313,313,?,no
+Advia 1650,C4,312,312,Serum,no
+APTIO,Sent,AQ1,AQ1,?,no
+Centaur XP_1,T3,T3,T3,Serum,no
+Centaur XP_1,T4,T4,T4,Serum,no

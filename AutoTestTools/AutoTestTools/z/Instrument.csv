@@ -1,0 +1,16 @@
+Name,Type,ParentInstrument.Name,Translator.Name,CodingSystem.Name,DefaultSampleType.Name,DefaultContainerType.Name,CommentStorage,UnknownFlagComment,RequestScheduling,DownloadByWorkList,OnAllQueryMatchTarget,OnAllQueryMaxSamples,MaxPrevResults,FullSampleUpload,DefaultLISChannel.Name,LASChannel.Name,LASConnectionActive,CountedTest.Name,CountCycle,CountLimit,PatDemographicsDownld,CheckUnits,RqstGroupsIncludeImgs,BarcodeTranslation.Description,OnEndResultMessage.Description
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.3
+%% Table: Instrument
+%% Exported on: 09/30/17 at 12:08:19
+%% Exported by: SiemensService
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia2400_1,Normal,?,Advia2400_1_Translator,Advia 2400,Serum,7 ml tube,Code or Text,S,Once,no,no,?,0,no,Site default LISChannel,Automation1,yes,?,?,?,Always,no,no,Advia 1650 barcode translation,OERM_Chemistry_V1.0
+CentaurXP_1,Normal,?,CentaurXP_1_Translator,?,?,?,Text or Code,S,Once,no,no,?,0,no,Site default LISChannel,Automation1,no,?,?,?,Always,no,no,?,OERM_CentaurXP_V1.1
+Advia2400_2,Normal,?,Advia2400_2_Translator,Advia 2400,Serum,7 ml tube,Code or Text,S,Once,no,no,?,0,no,Site default LISChannel,Automation1,yes,?,?,?,Always,no,no,Advia 1650 barcode translation,OERM_Chemistry_V1.0
+CentaurXP_LIS,Normal,?,?,?,?,?,Text or Code,S,Once,no,no,?,0,no,Site default LISChannel,?,yes,?,?,?,Always,no,no,?,OERM_CentaurXP_V1.1
+CentaurXP_2,Normal,?,CentaurXP_2_Translator,?,?,?,Text or Code,S,Once,no,no,?,0,no,Site default LISChannel,Automation1,yes,?,?,?,Always,no,no,?,OERM_CentaurXP_V1.1
+Advia2400_2_copy,Normal,?,?,Advia 2400,Serum,7 ml tube,Code or Text,S,Once,no,no,?,0,no,Site default LISChannel,?,yes,?,?,?,Always,no,no,Advia 1650 barcode translation,OERM_Chemistry_V1.0

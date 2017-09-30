@@ -1,0 +1,26 @@
+Name,InternalLanguage,AutoStart,SeqNo,Description,Host,Port,TimeOut,Server.Name,ExternalHost,ExternalPort,ExternalTimeOut,Driver,DriverVersion,IsBetaDriverVersion,SpecificOptions,ProcessId,LogVerbosity,LogFileRefresh,LogFileRefreshUnit,LogFileKeep,LogFileKeepUnit,LogFileMaxSize,LogFileRefrshOnMaxSize,RestartFailures,~Options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.3
+%% Table: gp_Translator
+%% Exported on: 09/26/17 at 12:07:38
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia2400_1_Translator,URL,yes,?,Advia2400_1_Translator,?,?,20,Advia2400_Service_1_2,192.168.1.55,3004,10,advc,?,no,-a -v new,?,Medium,1,Day,21,Day,10,yes,0,""
+Advia2400_2_Translator,URL,yes,?,Advia2400_2_Translator,?,?,20,Advia2400_Service_1_2,192.168.1.55,3005,10,advc,?,no,-a -v new,?,Medium,1,Day,21,Day,10,yes,0,""
+Advia2400_3_Translator,URL,yes,?,Advia2400_3_Translator,192.168.1.221,1369,20,Advia2400_Service_3_4,192.168.1.55,3006,10,advc,4.2.0,no,-a -v new,5420,Medium,1,Day,21,Day,10,yes,0,""
+CentaurXP_1_Translator,URL,yes,?,CentaurXP_1_Translator,192.168.1.221,1780,20,CentaurXP_Service_1_2,127.0.0.1,6001,10,cent,1.9.0,no,-q -c -p 1,4700,Medium,1,Day,21,Day,10,yes,0,""
+CentaurXP_2_Translator,URL,yes,?,CentaurXP_2_Translator,192.168.1.221,1664,20,CentaurXP_Service_1_2,127.0.0.1,6002,10,cent,1.9.0,no,-q -c -p 1,3136,Medium,1,Day,21,Day,10,yes,0,""
+CentaurXP_3_Translator,URL,yes,?,CentaurXP_3_Translator,192.168.1.221,1376,20,CentaurXP_Service_3_4,127.0.0.1,6003,10,cent,1.9.0,no,-q -c -p 1,5512,Medium,1,Day,21,Day,10,yes,0,""
+Auto_Receive,XML,yes,?,?,192.168.1.221,4310,10,ServerAuto,?,?,10,auto,1.3.0,no,-s 9002,7760,Medium,1,Day,21,Day,10,yes,0,?
+Auto_Transmit,XML,yes,?,?,192.168.1.221,4321,10,ServerAuto,?,?,10,auto,1.3.0,no,-s 9001,7224,Medium,1,Day,21,Day,10,yes,0,?
+LIS_IN_Translator,URL,yes,?,LIS_IN_Translator,192.168.1.221,1386,115,LIS_Server,?,?,10,asts,4.4.2,no,-s 7777,5480,Medium,1,Day,21,Day,10,yes,0,""
+LIS_OUT_Translator,URL,yes,?,LIS_OUT_Translator,192.168.1.221,1390,115,LIS_Server,?,?,10,asts,4.4.2,no,-s 9999,4800,Medium,1,Day,21,Day,10,yes,0,""
+LIS_IN_Translator_Biorad,URL,yes,?,LIS_IN_Translator,192.168.1.221,1394,115,LIS_Server_Biorad,?,?,10,asts,4.4.2,no,-s 8001,1008,Medium,1,Day,21,Day,10,yes,0,""
+LIS_OUT_Translator_Biorad,URL,yes,?,LIS_OUT_Translator,192.168.1.221,1398,115,LIS_Server_Biorad,?,?,10,asts,4.4.2,no,-s 8002,5384,Medium,1,Day,21,Day,10,yes,0,""
+Reagent,URL,yes,?,CentaurXP_1_Translator,192.168.1.221,1669,20,CentaurXP_Service_1_2,127.0.0.1,10001,10,cent,1.9.0,no,-q -c -p 1  -c,5600,Medium,1,Day,21,Day,10,yes,0,""
+Aptio2_Receive,XML,yes,?,?,192.168.1.221,1405,10,ServerAptio2,?,?,10,auto,1.3.0,no,-s 9013,5560,Medium,1,Day,21,Day,10,yes,0,?
+Aptio2_Transmit,XML,yes,?,?,192.168.1.221,1408,10,ServerAptio2,?,?,10,auto,1.3.0,no,-s 9011,5684,Medium,1,Day,21,Day,10,yes,0,?
+Datalink_in_Translator,URL,yes,?,CentaurXP_1_Translator,192.168.1.221,1824,20,Datalink_in_Centaur,192.168.1.252,7109,10,cent,1.9.0,no,-q -c -p 1,5732,Medium,1,Day,21,Day,10,yes,0,""

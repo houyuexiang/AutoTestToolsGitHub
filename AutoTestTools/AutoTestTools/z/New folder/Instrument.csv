@@ -1,0 +1,18 @@
+Name,Type,ParentInstrument.Name,Translator.Name,CodingSystem.Name,DefaultSampleType.Name,DefaultContainerType.Name,CommentStorage,UnknownFlagComment,RequestScheduling,DownloadByWorkList,OnAllQueryMatchTarget,OnAllQueryMaxSamples,MaxPrevResults,FullSampleUpload,DefaultLISChannel.Name,LASChannel.Name,LASConnectionActive,CountedTest.Name,CountCycle,CountLimit,PatDemographicsDownld,CheckUnits,RqstGroupsIncludeImgs,BarcodeTranslation.Description,OnEndResultMessage.Description,~QC01,~QC02
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.3
+%% Table: Instrument
+%% Exported on: 09/26/17 at 12:06:56
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia2400_2,Normal,?,Advia2400_2_Translator,Advia 2400,Serum,7 ml tube,Code or Text,?,Once,no,no,?,0,no,?,Aptio1,yes,?,?,?,Always,yes,no,Advia_2400_2_barcode_translation_0.4,OERM_Chemistry_V6.0,?,?
+CentaurXP_1,Normal,?,CentaurXP_1_Translator,Centaur_XP,?,?,Text or Code,?,Once,no,no,?,0,no,?,Aptio1,yes,?,?,?,Always,no,no,Advia_Centaur_1_barcode_translation_0.4,OERM_CentaurXP_V8.0,?,?
+CentaurXP_3,Normal,?,CentaurXP_3_Translator,Centaur_XP,?,?,Text or Code,?,Once,no,no,?,0,no,?,Aptio1,yes,?,?,?,Always,no,no,Advia_Centaur_3_barcode_translation_0.4,OERM_CentaurXP_V8.0,?,?
+CentaurXP_2,Normal,?,CentaurXP_2_Translator,Centaur_XP,?,?,Text or Code,?,Once,no,no,?,0,no,?,Aptio1,no,?,?,?,Always,no,no,Advia_Centaur_2_barcode_translation_0.4,OERM_CentaurXP_V8.0,?,?
+Advia2400_1,Normal,?,Advia2400_1_Translator,Advia 2400,Serum,7 ml tube,Code or Text,?,Once,no,no,?,0,no,?,Aptio1,yes,?,?,?,Always,yes,no,Advia_2400_1_barcode_translation_0.4,OERM_Chemistry_V6.0,?,?
+Advia2400_3,Normal,?,Advia2400_3_Translator,Advia 2400,Serum,7 ml tube,Code or Text,?,Once,no,no,?,0,no,?,Aptio1,yes,?,?,?,Always,yes,no,Advia_2400_3_barcode_translation_0.4,OERM_Chemistry_V6.0,?,?
+Reagent,Normal,?,Reagent,?,?,?,Text or Code,?,Once,no,no,?,0,no,?,?,yes,?,?,?,Always,no,no,?,?,?,?
+CentaurXP_Datalink,Normal,?,Datalink_in_Translator,Centaur_XP,?,?,Text or Code,?,Once,no,no,?,0,no,?,Aptio1,yes,?,?,?,Always,no,no,Advia_Centaur_1_barcode_translation_0.4,OERM_CentaurXP_V8.0,?,?

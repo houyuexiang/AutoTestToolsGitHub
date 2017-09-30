@@ -1,0 +1,11 @@
+Mnemonic,Class,Description,Table.Name,Text:E,StartDate,EndDate
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.1
+%% Table: gp_Text
+%% Exported on: 08/31/10 at 11:40:04
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ReportHeader,?,?,Sample,"Sample: {= .Identifier} Report time: {= ToString(DateAndTimeToDateTime(Today(), Now()), ""%x %X"")}",?,?

@@ -1,0 +1,13 @@
+Instrument.Name,Translator.Name
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 16.0.2
+%% Table: InstrumentTranslator
+%% Exported on: 09/07/17 at 10:18:34
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ADVIA2400_1,ADVIA2400_2_Translator
+CentaurXP_1,CentaurXP_1_Translator
+ADVIA2120_1,ADVIA2120_1_Translator

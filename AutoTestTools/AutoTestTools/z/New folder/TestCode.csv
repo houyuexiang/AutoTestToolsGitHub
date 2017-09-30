@@ -1,0 +1,145 @@
+CodingSystem.Name,Test.Name,InboundValue,OutboundValue,SampleType.Name,CaseSensitive
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.3
+%% Table: TestCode
+%% Exported on: 09/26/17 at 12:07:40
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia 2400,AST,305,305,Serum,no
+Advia 2400,ALT,304,304,Serum,no
+Advia 2400,GGT,306,306,Serum,no
+Advia 2400,ALP,307,307,Serum,no
+Advia 2400,LDH,308,308,Serum,no
+Advia 2400,ChE,309,309,Serum,no
+Advia 2400,TBA,333,333,Serum,no
+Advia 2400,Mg,311,311,Serum,no
+Advia 2400,TG,312,312,Serum,no
+Advia 2400,BUN,318,318,?,no
+Advia 2400,CHOL,319,319,Serum,no
+Advia 2400,LDL-C,321,321,Serum,no
+Advia 2400,HDL-C,322,322,Serum,no
+Advia 2400,CRP,323,323,Serum,no
+Advia 2400,UIBC,320,320,Serum,no
+Advia 2400,Glu,325,325,Serum,no
+Advia 2400,Ca,326,326,?,no
+Advia 2400,P,327,327,Serum,no
+Advia 2400,S-Fe,328,328,Serum,no
+Advia 2400,TP,329,329,Serum,no
+Advia 2400,Alb,330,330,Serum,no
+Advia 2400,TBil,337,337,Serum,no
+Advia 2400,DBil,336,336,Serum,no
+Advia 2400,UA,332,332,?,no
+Advia 2400,CO2,331,331,Serum,no
+Advia 2400,CK,310,310,Serum,no
+Advia 2400,Saline,370,370,?,no
+Advia 2400,Lipe,371,371,?,no
+Advia 2400,Hemo,372,372,?,no
+Advia 2400,Icte,373,373,?,no
+Advia 2400,Lp(a),362,362,Serum,no
+Advia 2400,TRF,344,344,Serum,no
+Advia 2400,apoA1,346,346,Serum,no
+Advia 2400,apoB,347,347,Serum,no
+Advia 2400,CREA,348,348,?,no
+Advia 2400,5-NT,352,352,Serum,no
+Advia 2400,AMS,350,350,?,no
+Advia 2400,AFU,356,356,Serum,no
+Advia 2400,a-HBD,357,357,Serum,no
+Advia 2400,CK-MB,355,355,Serum,no
+Advia 2400,PA,359,359,Serum,no
+Advia 2400,ADA,360,360,Serum,no
+Advia 2400,Cys-C,324,324,Serum,no
+Advia 2400,b2-MG,365,365,?,no
+Advia 2400,sCRP,367,367,Serum,no
+Advia 2400,PG2,342,342,Serum,no
+Advia 2400,PG1,341,341,Serum,no
+Advia 2400,IMA,316,316,Serum,no
+Advia 2400,HB,335,335,Serum,no
+Advia 2400,GA,314,314,Serum,no
+Advia 2400,NEFA,317,317,Serum,no
+Advia 2400,SOD,338,338,Serum,no
+Advia 2400,ASTm,339,339,Serum,no
+Advia 2400,apoE,334,334,Serum,no
+Advia 2400,MNP,315,315,Serum,no
+Advia 2400,RBP,313,313,Serum,no
+Advia 2400,HCY,340,340,Serum,no
+Advia 2400,Na,301,301,?,no
+Advia 2400,K,302,302,?,no
+Advia 2400,Cl,303,303,?,no
+Advia 2400,bHB,345,345,Serum,no
+Advia 2400,URBP,349,349,Urine,no
+Advia 2400,GSP,351,351,Serum,no
+Advia 2400,MP,353,353,?,no
+Advia 2400,LPS,354,354,Serum,no
+LAS,CA724,CA724,E601,?,no
+LAS,NSE,NSE,E601,?,no
+LAS,T-g,T-g,E601,?,no
+LAS,cyfra211,Cyfra211,E601,?,no
+LIS,AFP_CAL,AFP_CAL,AFP,?,no
+LIS,CA125_CAL,CA125_CAL,CA125,?,no
+LIS,CA153_CAL,CA153_CAL,CA153,?,no
+LIS,CA199_CAL,CA199_CAL,CA199,?,no
+LIS,CEA_CAL,CEA_CAL,CEA,?,no
+LIS,cPSA_CAL,cPSA_CAL,cPSA,?,no
+LIS,FER_CAL,FER_CAL,FER,?,no
+LIS,LH_CAL,LH_CAL,LH,?,no
+LIS,PRL_CAL,PRL_CAL,PRL,?,no
+LIS,PSA_CAL,PSA_CAL,PSA,?,no
+LIS,TSTO_CAL,TSTO_CAL,TSTO,?,no
+Advia 2400,Glu30,325,325,30Min,no
+Advia 2400,Glu60,325,325,60Min,no
+Advia 2400,GGT1,406,406,Serum,no
+LAS,Glu30,Glu,Glu,30Min,no
+LAS,Glu60,Glu,Glu,60Min,no
+LAS,Glu120,Glu,Glu,120Min,no
+LAS,Glu180,Glu,Glu,180Min,no
+Advia 2400,Glu120,325,325,120Min,no
+Advia 2400,Glu180,325,325,180Min,no
+LIS,Glu30c,Glu30_,Glu30,?,no
+LIS,Glu60c,Glu60_,Glu60,?,no
+LIS,Glu120c,Glu120_,Glu120,?,no
+LIS,Glu180c,Glu180_,Glu180,?,no
+Advia 2400,Glu0,325,325,0Min,no
+LAS,Glu0,Glu,Glu,0Min,no
+Centaur_XP,CpS0,CpS,CpS,0Min,no
+Centaur_XP,CpS,CpS,CpS,Serum,no
+Centaur_XP,CpS30,CpS,CpS,30Min,no
+Centaur_XP,CpS60,CpS,CpS,60Min,no
+Centaur_XP,CpS120,CpS,CpS,120Min,no
+Centaur_XP,CpS180,CpS,CpS,180Min,no
+LAS,CpS30,CpS,CpS,30Min,no
+LAS,CpS60,CpS,CpS,60Min,no
+LAS,CpS120,CpS,CpS,120Min,no
+LAS,CpS180,CpS,CpS,180Min,no
+LAS,CpS0,CpS,CpS,0Min,no
+LIS,CpS120c,CpS120_,CpS120,?,no
+LIS,CpS180c,CpS180_,CpS180,?,no
+LIS,CpS30c,CpS30_,CpS30,?,no
+LIS,CpS60c,CpS60_,CpS60,?,no
+LIS,IRI120c,IRI120_,IRI120,?,no
+LIS,IRI180c,IRI180_,IRI180,?,no
+LIS,IRI30c,IRI30_,IRI30,?,no
+LIS,IRI60c,IRI60_,IRI60,?,no
+LAS,IRI30,IRI,IRI,30Min,no
+LAS,IRI60,IRI,IRI,60Min,no
+LAS,IRI120,IRI,IRI,120Min,no
+LAS,IRI180,IRI,IRI,180Min,no
+LAS,IRI0,IRI,IRI,0Min,no
+Centaur_XP,IRI,IRI,IRI,Serum,no
+Centaur_XP,IRI30,IRI,IRI,30Min,no
+Centaur_XP,IRI60,IRI,IRI,60Min,no
+Centaur_XP,IRI120,IRI,IRI,120Min,no
+Centaur_XP,IRI180,IRI,IRI,180Min,no
+Centaur_XP,IRI0,IRI,IRI,0Min,no
+Advia 2400,uALB_2,390,390,Urine,no
+Advia 2400,HP,375,375,Serum,no
+Advia 2400,ALB-GA,381,381,Serum,no
+Advia 2400,C4,383,383,Serum,no
+Advia 2400,C3,382,382,Serum,no
+Advia 2400,IgA,361,361,Serum,no
+Advia 2400,IgG,363,363,Serum,no
+Advia 2400,IgM,364,364,Serum,no
+Advia 2400,RF,369,369,Serum,no
+Advia 2400,ASO,368,368,Serum,no

@@ -1,0 +1,412 @@
+Mnemonic,Class,Description,Table.Name,Text:E,StartDate,EndDate
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 16.0.2
+%% Table: gp_Text
+%% Exported on: 09/07/17 at 10:16:33
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ReportHeader,?,?,Sample,"Sample: {= .Identifier} Report time: {= ToString(DateAndTimeToDateTime(Today(), Now()), ""%x %X"")}",?,?
+NS_Comment_ALT_Male_?_?_20140529161119875,?,NS_Comment_ALT_Male_?_?_20140529161119875,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<5"";
+Message_UB := "">200"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Female_?_?_20140529161119906,?,NS_Comment_ALT_Female_?_?_20140529161119906,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<5"";
+Message_UB := "">170"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Male_20_50_20140529161119937,?,NS_Comment_ALT_Male_20_50_20140529161119937,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<15"";
+Message_UB := "">190"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Female_10_20_20140529161119968,?,NS_Comment_ALT_Female_10_20_20140529161119968,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<1"";
+Message_UB := "">201"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Male_28_60_20140529161120468,?,NS_Comment_ALT_Male_28_60_20140529161120468,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<28"";
+Message_UB := "">260"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_AST_Male_18_28_20140529161120109,?,NS_Comment_AST_Male_18_28_20140529161120109,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<67"";
+Message_UB := "">80"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_AST_Female_18_28_20140529161120187,?,NS_Comment_AST_Female_18_28_20140529161120187,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<80"";
+Message_UB := "">99"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Male_?_?_20140529162754312,?,NS_Comment_ALT_Male_?_?_20140529162754312,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<5"";
+Message_UB := "">200"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Female_?_?_20140529162754343,?,NS_Comment_ALT_Female_?_?_20140529162754343,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<5"";
+Message_UB := "">170"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Male_20_50_20140529162754375,?,NS_Comment_ALT_Male_20_50_20140529162754375,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<15"";
+Message_UB := "">190"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Female_10_20_20140529162754406,?,NS_Comment_ALT_Female_10_20_20140529162754406,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<1"";
+Message_UB := "">201"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_ALT_Male_28_60_20140529162754484,?,NS_Comment_ALT_Male_28_60_20140529162754484,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<28"";
+Message_UB := "">260"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_AST_Male_18_28_20140529162754546,?,NS_Comment_AST_Male_18_28_20140529162754546,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<67"";
+Message_UB := "">80"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+NS_Comment_AST_Female_18_28_20140529162754625,?,NS_Comment_AST_Female_18_28_20140529162754625,Request,"{:
+String Message_LB, Message_UB;
+
+Message_LB := ""<80"";
+Message_UB := "">99"";
+
+If .NormSeverity < 0 Then
+   Return Message_LB;
+Else
+   Return Message_UB;
+Endif;
+}",?,?
+ReviewAndEditHemaLayout,"",?,Sample,"<html>
+<head>
+<style type=""text/css"">
+   body ~{
+       color: black;
+       font-size: 11;
+       font-family: ""Verdana"";
+       background-color: #fbfbfb;
+       border: 1px solid #c0c0c0;
+       overflow-x: hidden;
+       }
+   img ~{
+       border: 0;
+       }
+   a ~{
+       color: blue;
+       font-size: 13;
+       font-family: ""Verdana"";
+       }
+   td ~{
+       font-size: 11;
+       vertical-align: top;
+       }
+</style>
+<script>
+function viewBasic() ~{
+    document.getElementById('basic').style.display = 'block';
+    document.getElementById('advanced').style.display = 'none';
+    document.getElementById('LAS').style.display = 'none';
+}
+function viewAdvanced() ~{
+    document.getElementById('basic').style.display = 'none';
+    document.getElementById('advanced').style.display = 'block';
+    document.getElementById('LAS').style.display = 'none';
+}
+function viewLAS() ~{
+    document.getElementById('basic').style.display = 'none';
+    document.getElementById('advanced').style.display = 'none';
+    document.getElementById('LAS').style.display = 'block';
+}
+</script>
+</head>
+<body>
+<a href=""#"" onclick=""viewBasic();"">Basic</a> <a href=""#"" onclick=""viewAdvanced();"">Advanced</a> <a href=""#"" onclick=""viewLAS();"">LAS</a><br style=""height: 20px;""/>
+<div id=""basic""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 50%;""><strong>Sample Id: </strong>{= .Identifier}</td>
+    <td style=""width: 50%;""><strong>Priority: </strong>{=IF .Priority = 1 THEN ""Routine"" ELSE IF .Priority = 2 THEN ""ASAP"" ELSE IF .Priority = 3 THEN ""Stat"" ELSE """" }</td>
+  </tr>
+  <tr>
+    <td><strong>Collection time: </strong>{= IfKnownString(ToString(.CollectionTime, ""%x %X""))}</td>
+    <td><strong>Patient location: </strong>{= IfKnownString(.PatientLocation.Name)}</td>
+  </tr>
+  <tr>
+    <td colspan=""2""><strong>Sample comment: </strong>{= IfKnownString(.Comment)}</td>
+  </tr>
+</table></div>
+<div id=""advanced"" style=""display: none;""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 30%;""><strong>Physician Id: </strong>{= IfKnownString(.Physician.Identifier)}</td>
+    <td colspan=""2""><strong>Physician name: </strong>{= IfKnownString(.Physician.LastName)}{=IF .Physician.FirstName <> ? THEN "", "" + .Physician.FirstName ELSE """"}</td>
+  </tr>
+  <tr>
+    <td><strong>Instrument time: </strong>{= IfKnownString(ToString(.InstrumentTime, ""%x %X""))}</td>
+    <td><strong>Creation time: </strong>{= IfKnownString(ToString(.CreationTime, ""%x %X""))}</td>
+    <td><strong>Sample type: </strong>{= IfKnownString(.Type.Name)}</td>
+  </tr>
+  <tr>
+    <td><strong>Instrument: </strong>{= IfKnownString(.Instrument.Name)}</td>
+    <td><strong>Rack: </strong>{= IfKnownString(.InstrumentRack.Name)}</td>
+    <td><strong>Position: </strong>{= IfKnownString(.InstrumentPosition)}</td>
+    <td><strong>Encounter: </strong>{= IfKnownString(.Encounter)}</td>
+  </tr>
+</table></div>
+<div id=""LAS"" style=""display: none;""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 30%;""><strong>Name: </strong>{= IfKnownString(.LASChannel.Name)}</td>
+    <td colspan=""2""><strong>Time: </strong>{= IfKnownString(ToString(.LASTime, ""%x %X""))}</td>
+    <td style=""width: 30%;""><strong>General area: </strong>{= IfKnownString(.LASGeneralArea.Name)}</td>
+  </tr>
+  <tr>
+    <td><strong>Shelf: </strong>{= IfKnownString(.LASShelf)}</td>
+    <td><strong>Door: </strong>{= IfKnownString(.LASDoor)}</td>
+    <td><strong>Area: </strong>{= IfKnownString(.LASArea)}</td>
+    <td><strong>Gate: </strong>{= IfKnownString(.LASGate)}</td>
+  </tr>
+  <tr>
+    <td><strong>Tray Id: </strong>{= IfKnownString(.LASTrayId)}</td>
+    <td colspan=""2""><strong>Tray position: </strong>{= IfKnownString(.LASTrayPosition)}</td>
+    <td><strong>Lane: </strong>{= IfKnownString(.LASLane.Name)}</td>
+  </tr>
+</table></div>
+</body>
+</html>",?,?
+ReviewAndEditHemaLayout,"",?,Patient,"<html>
+<head>
+<style type=""text/css"">
+   body ~{
+       color: black;
+       font-size: 11;
+       font-family: ""Verdana"";
+       background-color: #fbfbfb;
+       border: 1px solid #c0c0c0;
+       overflow-x: hidden;
+       }
+   img ~{
+       border: 0;
+       }
+   td ~{
+       font-size: 11;
+       vertical-align: top;
+       }
+</style>
+</head>
+<body>
+<div id=""basic""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 50%;""><strong>Patient Id: </strong>{= IfKnownString(.Identifier)}</td>
+    <td style=""width: 25%;""><strong>Species: </strong>{= IfKnownString(.Species.Name)}</td>
+    <td style=""width: 25%;""><strong>Sex: </strong>{=IF .Sex = 1 THEN ""Male"" ELSE IF .Sex = 2 THEN ""Female"" ELSE """" }</td>
+    
+  </tr>
+  <tr>
+    <td colspan=""2""><strong>Patient name: </strong>{= IfKnownString(.LastName)}{=IF .MiddleName <> ? THEN "", "" + .MiddleName ELSE """"}{=IF .FirstName <> ? THEN "", "" + .FirstName ELSE """"}</td>
+    <td><strong>DOB: </strong>{= IfKnownString(ToString(.BirthDate, ""%x""))}</td>
+  </tr>
+  <tr>
+    <td colspan=""3""><strong>Patient comment: </strong>{= IfKnownString(.Comment)}</td>
+  </tr>
+</table></div>
+</body>
+</html>",?,?
+ReviewAndEditLayout,"",?,Sample,"<html>
+<head>
+<style type=""text/css"">
+   body ~{
+       color: black;
+       font-size: 11;
+       font-family: ""Verdana"";
+       background-color: #fbfbfb;
+       border: 1px solid #c0c0c0;
+       overflow-x: hidden;
+       }
+   img ~{
+       border: 0;
+       }
+   a ~{
+       color: blue;
+       font-size: 13;
+       font-family: ""Verdana"";
+       }
+   td ~{
+       font-size: 11;
+       vertical-align: top;
+       }
+</style>
+<script>
+function viewBasic() ~{
+    document.getElementById('basic').style.display = 'block';
+    document.getElementById('advanced').style.display = 'none';
+    document.getElementById('LAS').style.display = 'none';
+}
+function viewAdvanced() ~{
+    document.getElementById('basic').style.display = 'none';
+    document.getElementById('advanced').style.display = 'block';
+    document.getElementById('LAS').style.display = 'none';
+}
+function viewLAS() ~{
+    document.getElementById('basic').style.display = 'none';
+    document.getElementById('advanced').style.display = 'none';
+    document.getElementById('LAS').style.display = 'block';
+}
+</script>
+</head>
+<body>
+<a href=""#"" onclick=""viewBasic();"">Basic</a> <a href=""#"" onclick=""viewAdvanced();"">Advanced</a> <a href=""#"" onclick=""viewLAS();"">LAS</a><br style=""height: 20px;""/>
+<div id=""basic""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 30%;""><strong>Sample Id: </strong>{= .Identifier}</td>
+    <td style=""width: 20%;""><strong>Priority: </strong>{=IF .Priority = 1 THEN ""Routine"" ELSE IF .Priority = 2 THEN ""ASAP"" ELSE IF .Priority = 3 THEN ""Stat"" ELSE """" }</td>
+    <td style=""width: 20%;""><strong>Age: </strong>{= IfKnownString(ToString(Truncate(.Patient.AgeInYears(DateTimeToDate(.CreationTime)), 0), ""%g""))}</td>
+    <td style=""width: 30%;""><strong>Patient Id: </strong>{= IfKnownString(.Patient.Identifier)}</td>
+  </tr>
+  <tr>
+    <td><strong>Patient name: </strong>{= IfKnownString(.Patient.LastName)}{=IF .Patient.MiddleName <> ? THEN "", "" + .Patient.MiddleName ELSE """"}{=IF .Patient.FirstName <> ? THEN "", "" + .Patient.FirstName ELSE """"}</td>
+    <td><strong>Sex: </strong>{=IF .Patient.Sex = 1 THEN ""Male"" ELSE IF .Patient.Sex = 2 THEN ""Female"" ELSE """" }</td>
+    <td><strong>DOB: </strong>{= IfKnownString(ToString(.Patient.BirthDate, ""%x""))}</td>
+    <td><strong>Patient location: </strong>{= IfKnownString(.PatientLocation.Name)}</td>
+  </tr>
+  <tr>
+    <td><strong>Collection time: </strong>{= IfKnownString(ToString(.CollectionTime, ""%x %X""))}</td>
+    <td colspan=""2""><strong>Sample comment: </strong>{= IfKnownString(.Comment)}</td>
+    <td><strong>Patient comment: </strong>{= IfKnownString(.Patient.Comment)}</td>
+  </tr>
+</table></div>
+<div id=""advanced"" style=""display: none;""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 30%;""><strong>Physician Id: </strong>{= IfKnownString(.Physician.Identifier)}</td>
+    <td colspan=""2""><strong>Physician name: </strong>{= IfKnownString(.Physician.LastName)}{=IF .Physician.FirstName <> ? THEN "", "" + .Physician.FirstName ELSE """"}</td>
+    <td style=""width: 30%;""><strong>Species: </strong>{= IfKnownString(.Species.Name)}</td>
+  </tr>
+  <tr>
+    <td><strong>Instrument time: </strong>{= IfKnownString(ToString(.InstrumentTime, ""%x %X""))}</td>
+    <td colspan=""2""><strong>Creation time: </strong>{= IfKnownString(ToString(.CreationTime, ""%x %X""))}</td>
+    <td><strong>Sample type: </strong>{= IfKnownString(.Type.Name)}</td>
+  </tr>
+  <tr>
+    <td><strong>Instrument: </strong>{= IfKnownString(.Instrument.Name)}</td>
+    <td><strong>Rack: </strong>{= IfKnownString(.InstrumentRack.Name)}</td>
+    <td><strong>Position: </strong>{= IfKnownString(.InstrumentPosition)}</td>
+    <td><strong>Encounter: </strong>{= IfKnownString(.Encounter)}</td>
+  </tr>
+</table></div>
+<div id=""LAS"" style=""display: none;""><table style=""width: 100%;"">
+  <tr>
+    <td style=""width: 30%;""><strong>Name: </strong>{= IfKnownString(.LASChannel.Name)}</td>
+    <td colspan=""2""><strong>Time: </strong>{= IfKnownString(ToString(.LASTime, ""%x %X""))}</td>
+    <td style=""width: 30%;""><strong>General area: </strong>{= IfKnownString(.LASGeneralArea.Name)}</td>
+  </tr>
+  <tr>
+    <td><strong>Shelf: </strong>{= IfKnownString(.LASShelf)}</td>
+    <td><strong>Door: </strong>{= IfKnownString(.LASDoor)}</td>
+    <td><strong>Area: </strong>{= IfKnownString(.LASArea)}</td>
+    <td><strong>Gate: </strong>{= IfKnownString(.LASGate)}</td>
+  </tr>
+  <tr>
+    <td><strong>Tray Id: </strong>{= IfKnownString(.LASTrayId)}</td>
+    <td colspan=""2""><strong>Tray position: </strong>{= IfKnownString(.LASTrayPosition)}</td>
+    <td><strong>Lane: </strong>{= IfKnownString(.LASLane.Name)}</td>
+  </tr>
+</table></div>
+</body>
+</html>",?,?

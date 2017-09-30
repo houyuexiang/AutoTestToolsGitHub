@@ -1,0 +1,36 @@
+CodingSystem.Name,SampleType.Name,Value,MatchOrder
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.3
+%% Table: SampleTypeCode
+%% Exported on: 09/26/17 at 12:07:12
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia 2400,Serum,1,1
+Advia 2400,Urine,2,?
+AdviaIMS,Serum,S,?
+AdviaIMS,Plasma,P,?
+AdviaIMS,Urine,U,?
+AdviaIMS,CSF,CSF,?
+AdviaIMS,Hemolysate,HM,?
+AdviaIMS,Other,OTH,?
+LAS,Amniotic Fluid,A,1
+LAS,CSF,C,1
+LAS,Other,O,1
+LAS,Plasma,P,1
+LAS,Serum,S,1
+LAS,Urine,U,1
+LAS,Whole blood,W,1
+Advia 2400,30Min,1,3
+Advia 2400,60Min,1,4
+Advia 2400,120Min,1,5
+Advia 2400,180Min,1,6
+Advia 2400,0Min,1,2
+Centaur_XP,Serum,Serum,1
+Centaur_XP,0Min,Serum,2
+Centaur_XP,30Min,Serum,3
+Centaur_XP,60Min,Serum,4
+Centaur_XP,120Min,Serum,5
+Centaur_XP,180Min,Serum,6

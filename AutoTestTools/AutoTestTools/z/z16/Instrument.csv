@@ -1,0 +1,14 @@
+Name,Type,ParentInstrument.Name,CodingSystem.Name,DefaultSampleType.Name,DefaultContainerType.Name,CommentStorage,UnknownFlagComment,RequestScheduling,DownloadByWorkList,OnAllQueryMatchTarget,OnAllQueryMaxSamples,MaxPrevResults,FullSampleUpload,DefaultLISChannel.Name,LASChannel.Name,LASConnectionActive,CountedTest.Name,CountCycle,CountLimit,PatDemographicsDownld,CheckUnits,RqstGroupsIncludeImgs,SendOrderMessages,SendCancelMessages,AllowCancelledRslt,AllowPrelimRslt,BarcodeTranslation.Description,OnEndResultMessage.Description,OnAllQuerySampIdTrslt.Description,OnAllQuerySampSelect.Description
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 16.0.2
+%% Table: Instrument
+%% Exported on: 09/07/17 at 10:16:08
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+DiffPad,Diff pad,?,?,?,?,Code only,?,Once,no,no,?,0,no,?,?,yes,?,?,?,Always,yes,no,yes,no,yes,no,?,?,?,?
+ADVIA2400_1,Normal,?,Advia 1650,Serum,13 x 100,Code or Text,?,Once,no,yes,?,0,no,?,Automation1,no,?,?,?,Always,no,no,yes,no,yes,no,?,MISTL,?,?
+CentaurXP_1,Normal,?,Centaur XP,?,?,Code only,S,Once,no,yes,?,0,no,Site default LISChannel,Automation1,yes,?,?,?,Always,no,no,yes,no,yes,no,?,MISTL,?,?
+ADVIA2120_1,Normal,?,Advia 1650,Serum,13 x 75,Code or Text,S,Once,no,yes,?,0,yes,?,Automation1,yes,?,?,?,Always,no,no,yes,no,yes,no,?,MISTL,?,?

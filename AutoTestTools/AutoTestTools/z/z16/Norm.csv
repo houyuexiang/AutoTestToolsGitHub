@@ -1,0 +1,15 @@
+Id,Test.Name,EvaluationOrder,Sex,Species.Name,MinAge,MaxAge,AgeUnit.Name,LowLimit,HighLimit,Severity,Method.Instrument.Name,Eligible.Description,Comment.Mnemonic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 16.0.2
+%% Table: Norm
+%% Exported on: 09/07/17 at 10:16:09
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+15580,A1AT,1,?,?,?,?,?,?,?,1,?,?,?
+15599,AST,8,?,?,?,?,?,?,?,1,?,?,?
+15606,AST,2,Female,?,18,28,?,80,99,5,?,?,NS_Comment_AST_Female_18_28_20140529162754625
+15611,ALT,4,?,?,2,3,Year,15,20,1,?,?,?
+15612,A1AG,1,?,?,?,?,?,1,10,1,?,?,NS_Comment_ALT_Female_10_20_20140529161119968

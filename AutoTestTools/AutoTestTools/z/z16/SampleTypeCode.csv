@@ -1,0 +1,32 @@
+CodingSystem.Name,SampleType.Name,Value,MatchOrder
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 16.0.2
+%% Table: SampleTypeCode
+%% Exported on: 09/07/17 at 10:16:09
+%% Exported by: Advia
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia 1650,Serum,1,?
+Advia 1650,Urine,2,?
+Immuno 1,Plasma,P,?
+Immuno 1,Serum,S,?
+Immuno 1,Urine,U,?
+AdviaIMS,Serum,S,?
+AdviaIMS,Plasma,P,?
+AdviaIMS,Urine,U,?
+AdviaIMS,CSF,CSF,?
+AdviaIMS,Hemolysate,HM,?
+AdviaIMS,Other,OTH,?
+DimRXL,Serum,1,?
+DimRXL,Plasma,2,?
+DimRXL,Urine,3,?
+DimRXL,CSF,4,?
+Vista 1500,Serum,S,?
+Vista 1500,Plasma,P,?
+Vista 1500,CSF,C,?
+Vista 1500,Urine,U,?
+Vista 1500,Whole blood,W,?
+Vista 1500,Amniotic Fluid,A,?
+Vista 1500,Other,O,?

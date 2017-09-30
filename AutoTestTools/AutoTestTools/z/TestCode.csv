@@ -1,0 +1,66 @@
+CodingSystem.Name,Test.Name,InboundValue,OutboundValue,SampleType.Name,CaseSensitive
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Application: CENTRALINK
+%% Version: 15.0.3
+%% Table: TestCode
+%% Exported on: 09/30/17 at 12:08:22
+%% Exported by: SiemensService
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Advia 2400,Na,001,001,?,no
+Advia 2400,K,002,002,?,no
+Advia 2400,Cl,003,003,?,no
+Advia 2400,ALB,004,004,?,no
+Advia 2400,ALP,005,005,?,no
+Advia 2400,ALT,006,006,?,no
+Advia 2400,AST,007,007,?,no
+Advia 2400,BUN,008,008,?,no
+Advia 2400,Ca,009,009,?,no
+Advia 2400,CK,010,010,?,no
+Advia 2400,DBil,012,012,?,no
+Advia 2400,GGT,013,013,?,no
+Advia 2400,GLU,014,014,?,no
+Advia 2400,HDL-C,015,015,?,no
+Advia 2400,LDH,016,016,?,no
+Advia 2400,Mg,017,017,?,no
+Advia 2400,PHOS,018,018,?,no
+Advia 2400,TBIL,019,019,?,no
+Advia 2400,TC,020,020,?,no
+Advia 2400,TG,065,065,?,no
+Advia 2400,TP,022,022,?,no
+Advia 2400,UA,023,023,?,no
+Advia 2400,CysC,024,024,?,no
+Advia 2400,PA,025,025,?,no
+Advia 2400,ADA,026,026,?,no
+Advia 2400,AFU,027,027,?,no
+Advia 2400,TBA,028,028,?,no
+Advia 2400,HCY,030,030,?,no
+Advia 2400,LDL-C,031,031,?,no
+Advia 2400,A/G,033,033,?,no
+Advia 2400,Glo,034,034,?,no
+Advia 2400,Cr,035,035,?,no
+Advia 2400,IMA,036,036,?,no
+Advia 2400,G6PD/6PGD,046,046,?,no
+Advia 2400,Fe,052,052,?,no
+Advia 2400,CHE,054,054,?,no
+Advia 2400,UCr,035,035,Urine,no
+Advia 2400,CK-MB,056,056,?,no
+Advia 2400,RF,057,057,?,no
+Advia 2400,ASO,058,058,?,no
+Advia 2400,TCO2,060,060,?,no
+Advia 2400,UPro,061,061,?,no
+Advia 2400,APOA1,062,062,?,no
+Advia 2400,APOB,063,063,?,no
+Advia 2400,hs-CRP,064,064,?,no
+Advia 2400,TIBC,066,066,?,no
+Advia 2400,TRSF,067,067,?,no
+Advia 2400,EFT%,076,076,?,no
+Advia 2400,LIPE,078,078,?,no
+Advia 2400,HEMO,079,079,?,no
+Advia 2400,ICTE,080,080,?,no
+Advia 2400,AMY,051,051,?,no
+Advia 2400,UIBC,055,055,?,no
+Advia 2400,Saline,077,077,?,no
+Advia 2400,LIP,053,053,?,no
+Advia 2400,NH-3,059,059,?,no

@@ -1,0 +1,11 @@
+CodingSystem
+DeltaNorm
+Instrument
+Norm
+SampleTypeCode 
+Test 
+TestGroupMember 
+gp_Translator 
+TestCode 
+TestGroup 
+gp_Text
