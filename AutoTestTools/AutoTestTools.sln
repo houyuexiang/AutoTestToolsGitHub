@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTestTools", "AutoTestTools\AutoTestTools.csproj", "{A955461C-1F6D-48B6-A070-20078E90C750}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMSAutoOrder", "DMSAutoOrder\DMSAutoOrder.csproj", "{A73DF403-9E88-4DA4-9C26-D9B7F1E9D8A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A955461C-1F6D-48B6-A070-20078E90C750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A955461C-1F6D-48B6-A070-20078E90C750}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A955461C-1F6D-48B6-A070-20078E90C750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A73DF403-9E88-4DA4-9C26-D9B7F1E9D8A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73DF403-9E88-4DA4-9C26-D9B7F1E9D8A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73DF403-9E88-4DA4-9C26-D9B7F1E9D8A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73DF403-9E88-4DA4-9C26-D9B7F1E9D8A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

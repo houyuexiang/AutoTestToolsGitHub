@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BF5FBF44-E7AD-4F40-83B9-89609AA436D9}</ProjectGuid>
+    <ProjectGuid>{A955461C-1F6D-48B6-A070-20078E90C750}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>AutoTestTools</RootNamespace>
     <AssemblyName>AutoTestTools</AssemblyName>
