@@ -273,6 +273,7 @@ namespace DMSAutoOrder
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             Stop();
+            notifyIcon1.Visible = false;
             Application.Exit();
         }
 
