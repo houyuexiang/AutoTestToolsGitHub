@@ -237,6 +237,7 @@ namespace DMSAutoOrder
                 this.Visible = false;
                 this.ShowInTaskbar = false;
                 notifyIcon1.Visible = true; //使托盘图标可见
+                toolStripMenuItem1.Text = "Show";
             }
         }
 
@@ -246,6 +247,33 @@ namespace DMSAutoOrder
             this.Visible = true;
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
+            toolStripMenuItem1.Text = "Hide";
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.Hide();   //隐藏窗体
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+                notifyIcon1.Visible = true; //使托盘图标可见
+                this.WindowState = FormWindowState.Minimized;
+                toolStripMenuItem1.Text = "Show";
+            }
+            else
+            {
+                this.Visible = true;
+                this.ShowInTaskbar = true;
+                this.WindowState = FormWindowState.Normal;
+                toolStripMenuItem1.Text = "Hide";
+            }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Stop();
+            Application.Exit();
         }
 
         private void B_Save_Click(object sender, EventArgs e)
