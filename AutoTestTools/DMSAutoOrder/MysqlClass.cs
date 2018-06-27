@@ -17,6 +17,7 @@ namespace DMSAutoOrder
         public static string connectstring = "server=127.0.0.1;user id=root;password=root;database=sys";
         public static string DBIP, DBUserName, DBPassword;
         public static string DBname;
+        public static MySqlCommand dbcommand;
 
         public static MySqlConnection ConnectDb()
         {
@@ -123,6 +124,55 @@ namespace DMSAutoOrder
 
 
             return dt;
+        }
+        public static int ExecuteSQL(string sql, Boolean ShowErrormessage = false)
+        {
+            MySqlConnection MSC = GetNewConnect(DBname); ;
+            Boolean success = false;
+            int trycycle = 0;
+            while (!success)
+            {
+                try
+                {
+                    if (MSC == null)
+                    {
+                        MSC = GetNewConnect(DBname);
+                    }
+
+                    dbcommand = new MySqlCommand(sql, MSC);
+                    dbcommand.ExecuteNonQuery();
+                    success = true;
+                    MSC.Close();
+                    MSC.Dispose();
+                    //dbcommand.BeginExecuteNonQuery
+                }
+                catch (Exception e)
+                {
+                    if (ShowErrormessage)
+                    {
+                        DialogResult result = MessageBox.Show(e.Message + "\r\n" + sql, "SQLError");
+                    }
+
+                    trycycle++;
+                    if (trycycle > 10)
+                    {
+                        GlobalValue.WriteLog(e.Message + "\r\n" + sql, "SQLERROR.log");
+                        //if (MSC!=null)
+                        //{
+                        //    MSC.Close();
+                        //    MSC.Dispose();
+                        //}
+
+                        return -1;
+                    }
+
+
+                }
+
+            }
+
+
+            return 0;
         }
 
     }
