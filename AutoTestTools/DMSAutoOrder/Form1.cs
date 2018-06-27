@@ -178,6 +178,9 @@ namespace DMSAutoOrder
                     ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
                     dmsconnect.SendBuffer = ASTMmessage;
                     ASTMmessage = "";
+                    notifyIcon1.BalloonTipTitle = "Notification";
+                    notifyIcon1.BalloonTipText = "Processing Manual Sample :" + sid + " !";
+                    notifyIcon1.ShowBalloonTip(100);
                     Thread.Sleep(50);
                 }
                 Thread.Sleep(6000);
