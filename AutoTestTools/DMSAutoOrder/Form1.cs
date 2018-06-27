@@ -113,6 +113,8 @@ namespace DMSAutoOrder
             if (BAutoStart)
             {
                 Start();
+                this.WindowState = FormWindowState.Minimized;
+
             }
         }
 
@@ -225,6 +227,25 @@ namespace DMSAutoOrder
         private void TB_DBUser_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_MinimumSizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();   //隐藏窗体
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+                notifyIcon1.Visible = true; //使托盘图标可见
+            }
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            
+            this.Visible = true;
+            this.ShowInTaskbar = true;
+            this.WindowState = FormWindowState.Normal;
         }
 
         private void B_Save_Click(object sender, EventArgs e)

@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.B_Start = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.TB_IP = new System.Windows.Forms.TextBox();
@@ -51,6 +53,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.CB_AutoStart = new System.Windows.Forms.CheckBox();
             this.B_Save = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -281,6 +284,13 @@
             this.B_Save.UseVisualStyleBackColor = true;
             this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "DMSAutoOrder";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -291,9 +301,13 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.B_Start);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DMSAutoOrder";
+            this.MinimumSizeChanged += new System.EventHandler(this.Form1_MinimumSizeChanged);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.SizeChanged += new System.EventHandler(this.Form1_MinimumSizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -330,6 +344,7 @@
         private System.Windows.Forms.Button B_Save;
         private System.Windows.Forms.TextBox TB_SendTestCode;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 
