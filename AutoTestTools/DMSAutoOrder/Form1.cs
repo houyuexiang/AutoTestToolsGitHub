@@ -16,7 +16,7 @@ namespace DMSAutoOrder
     public partial class Form1 : Form
     {
         public Boolean BAutoStart, BSameIP, BStart;
-        public string STestCode;
+        public string STestCode,SampleIDLen;
         public string inifile = System.Environment.CurrentDirectory + "\\Setting.ini";
         public DMSConnector dmsconnect;
         public Form1()
@@ -44,7 +44,7 @@ namespace DMSAutoOrder
             STestCode = iniManager.GetString("DMS", "TestCode", "PARK");
             BAutoStart = (iniManager.GetString("SYS", "AutoStart", "0") == "1");
             BSameIP = (iniManager.GetString("SYS", "SameIP", "0") == "1");
-
+            SampleIDLen = iniManager.GetString("DMS", "SampleIDLen", "0");
         }
 
         private void RB_Client_CheckedChanged(object sender, EventArgs e)
@@ -161,6 +161,7 @@ namespace DMSAutoOrder
             {
                 string sid;
                 string sql = "select codsid from "+ MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from "+MysqlClass.DBname+".orders,"+MysqlClass.DBname+".anagpatient where " +MysqlClass.DBname +".orders.codaid = " +MysqlClass.DBname +".anagpatient.codaid and "+MysqlClass.DBname+".anagpatient.codpid = 'UNKNOWN')";
+                sql += " and codsid not in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest = 'UNKN')";
                 DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
                 foreach(DataRow r in dt.Rows)
                 {
@@ -178,6 +179,11 @@ namespace DMSAutoOrder
                 Thread.Sleep(6000);
             }
             
+        }
+
+        private void TB_DBUser_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void B_Save_Click(object sender, EventArgs e)
