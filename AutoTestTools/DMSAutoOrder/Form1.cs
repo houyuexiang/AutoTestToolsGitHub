@@ -161,19 +161,24 @@ namespace DMSAutoOrder
         {
             while (BStart)
             {
-                string sid,sampletype;
-                string sql = "select codsid from "+ MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from "+MysqlClass.DBname+".orders,"+MysqlClass.DBname+".anagpatient where " +MysqlClass.DBname +".orders.codaid = " +MysqlClass.DBname +".anagpatient.codaid and "+MysqlClass.DBname+".anagpatient.codpid = 'UNKNOWN')";
+                string sid,sampletype,oid;
+                string sql = "select codsid,codoid from "+ MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from "+MysqlClass.DBname+".orders,"+MysqlClass.DBname+".anagpatient where " +MysqlClass.DBname +".orders.codaid = " +MysqlClass.DBname +".anagpatient.codaid and "+MysqlClass.DBname+".anagpatient.codpid = 'UNKNOWN')";
                 sql += " and codsid not in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest = 'UNKN')";
                 DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
                 foreach(DataRow r in dt.Rows)
-                {
+                {   
+                    oid = r[1].ToString();
                     sid = r[0].ToString();
+                    if (oid == null)
+                    {
+                        oid = "";
+                    }
                     string ASTMmessage;
                     string timestr = DateTime.Today.ToString("yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo) + DateTime.Now.ToString("HHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
                     ValTest(sid);
                     sampletype = GetSampleType(sid);
                     ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
-                    ASTMmessage += "P|1||" + sid +"||Shougong|||F" + GlobalValue.CR;
+                    ASTMmessage += "P|1|" + oid +"|"+ sid +"||Shougong|||F" + GlobalValue.CR;
                     ASTMmessage += "O|1|" + sid + "||^^^"+ STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
                     ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
                     dmsconnect.SendBuffer = ASTMmessage;
@@ -184,17 +189,20 @@ namespace DMSAutoOrder
                     Thread.Sleep(50);
                 }
                 Thread.Sleep(6000);
+                ChangeWrongStatusSampleToHostFlg();
             }
             
         }
 
         private string GetSampleType(string SID)
         {
-            string sql,sampletype,testcode;
-            DataTable T_reqtube, T_reqtest, T_testlab;
+            string sql,sql2,sampletype,testcode;
+            Boolean Bhasinstrumenttest;
+            DataTable T_reqtube, T_reqtest, T_testlab,T_testinstrument,T_sampletype;
             sql = "Select codtypesample from " + MysqlClass.DBname + ".reqtube where codsid = '" + SID + "'";
             T_reqtube = MysqlClass.GetDataTable(sql, "tube");
             sampletype = T_reqtube.Rows[0][0].ToString();
+            Bhasinstrumenttest = false;
             if (sampletype !="" && sampletype != null)
             {
                 return sampletype;
@@ -206,6 +214,12 @@ namespace DMSAutoOrder
                 testcode = r[0].ToString();
                 sql = "select codtypesample from " + MysqlClass.DBname + ".testlab where codtest = '" + testcode + "' and codresult <> 'SORTMANUAL'";
                 T_testlab = MysqlClass.GetDataTable(sql, "testlab");
+                sql2 = "select * from " + MysqlClass.DBname + ".testinstrument where codtest = '" + testcode + "' and codiid <> 'HOSTASTMmCH' and codiid <> 'INPECO'";
+                T_testinstrument = MysqlClass.GetDataTable(sql, "testinstrument");
+                if (T_testinstrument.Rows.Count > 0)
+                {
+                    Bhasinstrumenttest = true;
+                }
                 if (T_testlab.Rows.Count > 0 )
                 {
                     sampletype = T_testlab.Rows[0][0].ToString();
@@ -214,7 +228,21 @@ namespace DMSAutoOrder
                         return sampletype;
                     }
                 }
+                if (Bhasinstrumenttest)
+                {
+                    sql = "select codtypesample from " + MysqlClass.DBname + ".typesample where flgdefault = '1'";
+                    T_sampletype = MysqlClass.GetDataTable(sql, "sampletype");
+                    if (T_sampletype.Rows.Count > 0)
+                    {
+                        sampletype = T_sampletype.Rows[0][0].ToString();
+                        if (sampletype != "" && sampletype != null)
+                        {
+                            return sampletype;
+                        }
+                    }
+                }
             }
+            sql = "";
             return "";
         }
 
@@ -224,6 +252,13 @@ namespace DMSAutoOrder
             sql = "Update " + MysqlClass.DBname + ".reqtestresult set flgstatus = 'V' where codsid = '" + SID + "' and flgstatus = 'H'";
             MysqlClass.ExecuteSQL(sql);
             sql = "Update " + MysqlClass.DBname + ".reqtest set flgstatus = 'V' where codsid = '" + SID + "' and flgstatus = 'H'";
+            MysqlClass.ExecuteSQL(sql);
+        }
+
+        private void ChangeWrongStatusSampleToHostFlg()
+        {
+            string sql;
+            sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where(flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost = 2";
             MysqlClass.ExecuteSQL(sql);
         }
 
