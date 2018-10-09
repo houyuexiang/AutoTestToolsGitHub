@@ -177,6 +177,10 @@ namespace DMSAutoOrder
                     string timestr = DateTime.Today.ToString("yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo) + DateTime.Now.ToString("HHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
                     ValTest(sid);
                     sampletype = GetSampleType(sid);
+                    if (sampletype == null)
+                    {
+                        continue;
+                    }
                     ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
                     ASTMmessage += "P|1|" + oid +"|"+ sid +"||Shougong|||F" + GlobalValue.CR;
                     ASTMmessage += "O|1|" + sid + "||^^^"+ STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
@@ -240,6 +244,10 @@ namespace DMSAutoOrder
                             return sampletype;
                         }
                     }
+                }
+                else
+                {
+                    return null;
                 }
             }
             sql = "";
