@@ -36,6 +36,10 @@ namespace DMSAutoOrder
             {
                 astm.sendbuffer = value;
             }
+            get
+            {
+                return astm.sendbuffer;
+            }
         }
         public void StopConnector()
         {

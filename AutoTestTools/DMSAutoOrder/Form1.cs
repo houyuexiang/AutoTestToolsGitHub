@@ -162,13 +162,20 @@ namespace DMSAutoOrder
             while (BStart)
             {
                 string sid,sampletype,oid;
-                string sql = "select codsid,codoid from "+ MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from "+MysqlClass.DBname+".orders,"+MysqlClass.DBname+".anagpatient where " +MysqlClass.DBname +".orders.codaid = " +MysqlClass.DBname +".anagpatient.codaid and "+MysqlClass.DBname+".anagpatient.codpid = 'UNKNOWN')";
-                sql += " and codsid not in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest = 'UNKN')";
+                string sql = "select codsid,codoid from "+ MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from "+MysqlClass.DBname+".orders,"+MysqlClass.DBname+".anagpatient where " +MysqlClass.DBname +".orders.codaid = " +MysqlClass.DBname +".anagpatient.codaid and "+MysqlClass.DBname+".anagpatient.codpid = 'UNKNOWN') ";
+                sql += " and codsid in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest <> 'UNKN')";
+                sql += " or codoid not in ( select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders )";
                 DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
                 foreach(DataRow r in dt.Rows)
                 {   
+                    while (dmsconnect.SendBuffer != "")
+                    {
+                        Thread.Sleep(10);
+                    }
+
                     oid = r[1].ToString();
                     sid = r[0].ToString();
+                    CleanOrdersTable(oid,sid);
                     if (oid == null)
                     {
                         oid = "";
@@ -182,7 +189,7 @@ namespace DMSAutoOrder
                         continue;
                     }
                     ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
-                    ASTMmessage += "P|1|" + oid +"|"+ sid +"||Shougong|||F" + GlobalValue.CR;
+                    ASTMmessage += "P|1|" + oid +"|"+ oid +"||Shougong|||F" + GlobalValue.CR;
                     ASTMmessage += "O|1|" + sid + "||^^^"+ STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
                     ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
                     dmsconnect.SendBuffer = ASTMmessage;
@@ -224,34 +231,54 @@ namespace DMSAutoOrder
                 {
                     Bhasinstrumenttest = true;
                 }
+                else
+                {
+                    continue;
+                }
                 if (T_testlab.Rows.Count > 0 )
                 {
-                    sampletype = T_testlab.Rows[0][0].ToString();
+                    sampletype = T_testlab.Rows[0][0].ToString().Trim();
                     if (sampletype != "" && sampletype != null)
                     {
                         return sampletype;
                     }
                 }
-                if (Bhasinstrumenttest)
+               
+            }
+            if (Bhasinstrumenttest)
+            {
+                sql = "select codtypesample from " + MysqlClass.DBname + ".typesample where flgdefault = '1'";
+                T_sampletype = MysqlClass.GetDataTable(sql, "sampletype");
+                if (T_sampletype.Rows.Count > 0)
                 {
-                    sql = "select codtypesample from " + MysqlClass.DBname + ".typesample where flgdefault = '1'";
-                    T_sampletype = MysqlClass.GetDataTable(sql, "sampletype");
-                    if (T_sampletype.Rows.Count > 0)
+                    sampletype = T_sampletype.Rows[0][0].ToString();
+                    if (sampletype != "" && sampletype != null)
                     {
-                        sampletype = T_sampletype.Rows[0][0].ToString();
-                        if (sampletype != "" && sampletype != null)
-                        {
-                            return sampletype;
-                        }
+                        return sampletype;
                     }
                 }
-                else
-                {
-                    return null;
-                }
+            }
+            else
+            {
+                return null;
             }
             sql = "";
             return "";
+        }
+
+        private void CleanOrdersTable(string OID,string SID)
+        {
+            string sql;
+            sql = "delete from " + MysqlClass.DBname + ".orders where codoid = '" + OID + "'";
+            MysqlClass.ExecuteSQL(sql);
+            sql = "delete from " + MysqlClass.DBname + ".orders_details where codoid = '" + OID + "'";
+            MysqlClass.ExecuteSQL(sql);
+            sql = "delete from " + MysqlClass.DBname + ".orders_tat where codoid = '" + OID + "'";
+            MysqlClass.ExecuteSQL(sql);
+            sql = "delete from " + MysqlClass.DBname + ".reqtest where codsid = '" + SID + "' and codtest = '"+ STestCode+"'";
+            MysqlClass.ExecuteSQL(sql);
+            sql = "delete from " + MysqlClass.DBname + ".reqtestresult where codsid = '" + SID + "' and codtest = '"+STestCode+"'";
+            MysqlClass.ExecuteSQL(sql);
         }
 
         private void ValTest(string SID)
@@ -266,7 +293,7 @@ namespace DMSAutoOrder
         private void ChangeWrongStatusSampleToHostFlg()
         {
             string sql;
-            sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where(flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost = 2";
+            sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where(flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost <> 0";
             MysqlClass.ExecuteSQL(sql);
         }
 
