@@ -175,7 +175,7 @@ namespace DMSAutoOrder
 
                     oid = r[1].ToString();
                     sid = r[0].ToString();
-                    CleanOrdersTable(oid,sid);
+                    
                     if (oid == null)
                     {
                         oid = "";
@@ -188,8 +188,10 @@ namespace DMSAutoOrder
                     {
                         continue;
                     }
+                    CleanOrdersTable(oid, sid);
                     ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
                     ASTMmessage += "P|1|" + oid +"|"+ oid +"||Shougong|||F" + GlobalValue.CR;
+                    ASTMmessage += "C|1|L|note:<nlbl:demographic_changed>|G" + GlobalValue.CR;
                     ASTMmessage += "O|1|" + sid + "||^^^"+ STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
                     ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
                     dmsconnect.SendBuffer = ASTMmessage;
@@ -270,14 +272,19 @@ namespace DMSAutoOrder
         {
             string sql;
             sql = "delete from " + MysqlClass.DBname + ".orders where codoid = '" + OID + "'";
+            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".orders_details where codoid = '" + OID + "'";
+            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".orders_tat where codoid = '" + OID + "'";
+            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".reqtest where codsid = '" + SID + "' and codtest = '"+ STestCode+"'";
+            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".reqtestresult where codsid = '" + SID + "' and codtest = '"+STestCode+"'";
+            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
             MysqlClass.ExecuteSQL(sql);
         }
 
