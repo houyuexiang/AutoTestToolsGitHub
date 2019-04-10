@@ -109,120 +109,122 @@ namespace DMSAutoOrder
         {
             string recievestr;
             #region process
+            try
+            {
                 Receive();
                 if (Receivemsg == "" || Receivemsg == null)
                 {
-                //检测无数据传输后是否需要发送数据
-                if (BRec == false && (SendBuffer != ""||SendBufferCount >0) && BSend == false)
-                {
-                    if (Receive() == "")
+                    //检测无数据传输后是否需要发送数据
+                    if (BRec == false && (SendBuffer != "" || SendBufferCount > 0) && BSend == false)
                     {
-                        int Startpos, Endpos;
-                        string temp, tempd;
-                        Send(ENQ);
-                        LastSend = ENQ;
-                        BSend = true;
-                        if (SendBufferCount > 0)
+                        if (Receive() == "")
                         {
-                            LOG("SENDSTART", "Process");
-                            return;
-                        }
-
-                        Sendindex = 0;
-
-                        Startpos = SendBuffer.IndexOf(FS);
-                        Endpos = SendBuffer.IndexOf(GS);
-                        temp = SendBuffer.Substring(Startpos + 1, Endpos - 1);
-                        SendBuffer = SendBuffer.Substring(Endpos + 1);
-                        Startpos = temp.IndexOf("[");
-                        Endpos = temp.IndexOf("]");
-
-                        while (Startpos >= 0 && Endpos >= 0)
-                        {
-                            tempd = temp.Substring(Startpos + 1, Endpos - 1);
-                            temp = temp.Substring(Endpos + 1);
-                            int astmcount = 0;
-                            //tempd = MakeAstm(tempd);
-                            if (tempd != "")
+                            int Startpos, Endpos;
+                            string temp, tempd;
+                            Send(ENQ);
+                            LastSend = ENQ;
+                            BSend = true;
+                            if (SendBufferCount > 0)
                             {
-                                string astmtmpf = "", astmtmp = "";
-                                //添加fn
-                                astmtmp = tempd;
-                                while (astmtmp.Length > 240)
-                                {
-                                    astmtmp = ((SendBufferCount + 1) % 8).ToString() + astmtmp;
-                                    astmtmpf = astmtmp.Substring(0, 241);
-                                    astmtmp = astmtmp.Substring(241);
-                                    SendBufferArray[SendBufferCount] = MakeAstm(astmtmpf + ETB) + CR + LF;
-                                    SendBufferCount++;
-                                }
-
-
-                                astmtmp = ((SendBufferCount + 1) % 8).ToString() + astmtmp;
-                                //添加计算校验
-                                SendBufferArray[SendBufferCount] = MakeAstm(astmtmp + ETX) + CR + LF;
-                                SendBufferCount++;
-                                astmcount++;
-
+                                LOG("SENDSTART", "Process");
+                                return;
                             }
+
+                            Sendindex = 0;
+
+                            Startpos = SendBuffer.IndexOf(FS);
+                            Endpos = SendBuffer.IndexOf(GS);
+                            temp = SendBuffer.Substring(Startpos + 1, Endpos - 1);
+                            SendBuffer = SendBuffer.Substring(Endpos + 1);
                             Startpos = temp.IndexOf("[");
                             Endpos = temp.IndexOf("]");
-                        }
-                        SendBufferArray[SendBufferCount] = EOT;
-                        SendBufferCount++;
-                        LOG("SENDSTART", "Process");
-                        timeout = 0;
-                    }
-                }
 
-                if (BSend == true)
-                {
-                    
-                    Thread.Sleep(100);
-                    timeout++;
-                    if (timeout >= 10)
+                            while (Startpos >= 0 && Endpos >= 0)
+                            {
+                                tempd = temp.Substring(Startpos + 1, Endpos - 1);
+                                temp = temp.Substring(Endpos + 1);
+                                int astmcount = 0;
+                                //tempd = MakeAstm(tempd);
+                                if (tempd != "")
+                                {
+                                    string astmtmpf = "", astmtmp = "";
+                                    //添加fn
+                                    astmtmp = tempd;
+                                    while (astmtmp.Length > 240)
+                                    {
+                                        astmtmp = ((SendBufferCount + 1) % 8).ToString() + astmtmp;
+                                        astmtmpf = astmtmp.Substring(0, 241);
+                                        astmtmp = astmtmp.Substring(241);
+                                        SendBufferArray[SendBufferCount] = MakeAstm(astmtmpf + ETB) + CR + LF;
+                                        SendBufferCount++;
+                                    }
+
+
+                                    astmtmp = ((SendBufferCount + 1) % 8).ToString() + astmtmp;
+                                    //添加计算校验
+                                    SendBufferArray[SendBufferCount] = MakeAstm(astmtmp + ETX) + CR + LF;
+                                    SendBufferCount++;
+                                    astmcount++;
+
+                                }
+                                Startpos = temp.IndexOf("[");
+                                Endpos = temp.IndexOf("]");
+                            }
+                            SendBufferArray[SendBufferCount] = EOT;
+                            SendBufferCount++;
+                            LOG("SENDSTART", "Process");
+                            timeout = 0;
+                        }
+                    }
+
+                    if (BSend == true)
                     {
-                        if (LastSend == ENQ)
+
+                        Thread.Sleep(100);
+                        timeout++;
+                        if (timeout >= 10)
                         {
-                            Reset();
+                            if (LastSend == ENQ)
+                            {
+                                Reset();
+                            }
+                            else
+                            {
+                                Receivemsg = ACK + Receivemsg;
+                                LOG("ADD ACK", "ADDACK");
+                            }
+
+                            //Reset();
+                            //Send(NAK);
+                            //LastSend = NAK;
+                            Thread.Sleep(10);
+                            timeout = 0;
+
                         }
-                        else
-                        {
-                            Receivemsg = ACK + Receivemsg;
-                            LOG("ADD ACK", "ADDACK");
-                        }
-                        
-                        //Reset();
-                        //Send(NAK);
-                        //LastSend = NAK;
-                        Thread.Sleep(10);
-                        timeout = 0;
-                        
                     }
-                }
-                if (BRec == true)
-                {
-                    Thread.Sleep(10);
-                    timeout++;
-                    if (timeout >= 10)
+                    if (BRec == true)
                     {
-                        if (BAddACK)
-                        {
-                            BRec = false;
-                            BAddACK = false;
-                            return;
-                        }
-                        BAddACK = true;
-                        Send(ACK);
-                        LOG("Resend ACK", "ReSendACK");
-                        LastSend = ACK;
                         Thread.Sleep(10);
-                        timeout = 0;
+                        timeout++;
+                        if (timeout >= 10)
+                        {
+                            if (BAddACK)
+                            {
+                                BRec = false;
+                                BAddACK = false;
+                                return;
+                            }
+                            BAddACK = true;
+                            Send(ACK);
+                            LOG("Resend ACK", "ReSendACK");
+                            LastSend = ACK;
+                            Thread.Sleep(10);
+                            timeout = 0;
 
+                        }
                     }
-                }
 
-                return;
+                    return;
                 }
                 timeout = 0;
                 recievestr = Receivemsg.Substring(0, 1);
@@ -231,227 +233,245 @@ namespace DMSAutoOrder
                 //发送完毕
                 if (LastSend == EOT)
                 {
-                //LOG("SENDEND", "Process");
-                BSend = false;
+                    //LOG("SENDEND", "Process");
+                    BSend = false;
                 }
-            //
-
-            //开始接收
-            if (recievestr == ENQ)
-            {
-
-                if (!BSend)
-                {
-
-                    LOG("RECSTART", "Process");
-                    Send(ACK);
-                    LastSend = ACK;
-                    Receivemsg = Receivemsg.Substring(1);
-                    LastRec = ENQ;
-                    BRec = true;
-                    return;
-                }
-                else
-                {
-                    Send(ENQ);
-                    LastSend = ENQ;
-                    LOG("SENDSTART", "Process");
-                    Receivemsg = Receivemsg.Substring(1);
-                    //LastRec = ENQ;
-                    BRec = false;
-                    return;
-                }
-            }
-            //发送数据
-            else if (recievestr == ACK)
-            {
-                Receivemsg = Receivemsg.Substring(1);
-                if (Sendindex == SendBufferCount) return;
-                if (SendBufferArray[Sendindex] != "" && SendBufferArray[Sendindex] != null)
-                {
-                    Send(SendBufferArray[Sendindex]);
-                    LastSend = SendBufferArray[Sendindex];
-                    if (SendBufferArray[Sendindex] == EOT)
-                    {
-                        BSend = false;
-                        LOG("SENDEND", "Process");
-                        LOG(SendBuffer + ":" + Sendindex + "/" + SendBufferCount, "SendBuffer");
-                        BRec = false;
-                    }
-                    Sendindex++;
-                    if (LastSend == EOT)
-                    {
-                        SendBufferCount = 0;
-                    }
-                    LastRec = ACK;
-
-                }
-            }
-            //数据接收完毕
-            else if (recievestr == EOT)
-            {
-                ReceiveBuffer += GS;
-                LastRec = EOT;
-                BRec = false;
-                Receivemsg = Receivemsg.Substring(1);
-                LOG("RECEND", "Process");
-                BSend = false;
-            }
-            //重新发送数据
-            else if (recievestr == NAK)
-            {
-                Send(LastSend);
-                //Send(ENQ);
-                //LastSend = ENQ;
-                if (Sendindex > 0)
-                {
-                    Sendindex = Sendindex - 1;
-                }
-                
-                LastRec = NAK;
-                BSend = true;
-                BRec = false;
-                Receivemsg = Receivemsg.Substring(1);
-            }
-            else
-            {
-                //接收数据
-                int Startpos, Endpos;
-
-
-
-
-
-                //处理接收到ETB的情况
-                //*[msgETB
-
-                Startpos = Receivemsg.IndexOf(ETB);
-                if (Startpos >= 0)
-                {
-                    Endpos = Receivemsg.IndexOf(STX, Startpos);
-                    while (Startpos >= 0 && Endpos > 0 && Endpos > Startpos)
-                    {
-                        Receivemsg = Receivemsg.Substring(0, Startpos - 1) + Receivemsg.Substring(Endpos + 1);
-                        Startpos = Receivemsg.IndexOf(ETB);
-                        if (Startpos >= 0)
-                        {
-                            Endpos = Receivemsg.IndexOf(STX, Startpos);
-                        }
-
-                    }
-                }
-
                 //
 
-                Endpos = Receivemsg.IndexOf(ETX);
-                Startpos = Receivemsg.IndexOf(STX);
-
-                while (Endpos >= 0 && Startpos >= 0)
+                //开始接收
+                if (recievestr == ENQ)
                 {
 
-                    if (LastRec == ENQ)
+                    if (!BSend)
                     {
-                        ReceiveBuffer += FS + "[" + Receivemsg.Substring(Startpos + 1, Endpos - 2) + "]";
+
+                        LOG("RECSTART", "Process");
+                        Send(ACK);
+                        LastSend = ACK;
+                        Receivemsg = Receivemsg.Substring(1);
+                        LastRec = ENQ;
+                        BRec = true;
+                        return;
                     }
                     else
                     {
-                        ReceiveBuffer += "[" + Receivemsg.Substring(Startpos + 1, Endpos - 2) + "]";
+                        Send(ENQ);
+                        LastSend = ENQ;
+                        LOG("SENDSTART", "Process");
+                        Receivemsg = Receivemsg.Substring(1);
+                        //LastRec = ENQ;
+                        BRec = false;
+                        return;
                     }
-                    LastRec = Receivemsg.Substring(Startpos + 1, Endpos - 2);
-                    Endpos = Receivemsg.IndexOf(CR + LF);
-                    Receivemsg = Receivemsg.Substring(Endpos + 2);
+                }
+                //发送数据
+                else if (recievestr == ACK)
+                {
+                    Receivemsg = Receivemsg.Substring(1);
+                    if (Sendindex == SendBufferCount) return;
+                    if (SendBufferArray[Sendindex] != "" && SendBufferArray[Sendindex] != null)
+                    {
+                        Send(SendBufferArray[Sendindex]);
+                        LastSend = SendBufferArray[Sendindex];
+                        if (SendBufferArray[Sendindex] == EOT)
+                        {
+                            BSend = false;
+                            LOG("SENDEND", "Process");
+                            LOG(SendBuffer + ":" + Sendindex + "/" + SendBufferCount, "SendBuffer");
+                            BRec = false;
+                        }
+                        Sendindex++;
+                        if (LastSend == EOT)
+                        {
+                            SendBufferCount = 0;
+                        }
+                        LastRec = ACK;
+
+                    }
+                }
+                //数据接收完毕
+                else if (recievestr == EOT)
+                {
+                    ReceiveBuffer += GS;
+                    LastRec = EOT;
+                    BRec = false;
+                    Receivemsg = Receivemsg.Substring(1);
+                    LOG("RECEND", "Process");
+                    BSend = false;
+                }
+                //重新发送数据
+                else if (recievestr == NAK)
+                {
+                    Send(LastSend);
+                    //Send(ENQ);
+                    //LastSend = ENQ;
+                    if (Sendindex > 0)
+                    {
+                        Sendindex = Sendindex - 1;
+                    }
+
+                    LastRec = NAK;
+                    BSend = true;
+                    BRec = false;
+                    Receivemsg = Receivemsg.Substring(1);
+                }
+                else
+                {
+                    //接收数据
+                    int Startpos, Endpos;
+
+
+
+
+
+                    //处理接收到ETB的情况
+                    //*[msgETB
+
+                    Startpos = Receivemsg.IndexOf(ETB);
+                    if (Startpos >= 0)
+                    {
+                        Endpos = Receivemsg.IndexOf(STX, Startpos);
+                        while (Startpos >= 0 && Endpos > 0 && Endpos > Startpos)
+                        {
+                            Receivemsg = Receivemsg.Substring(0, Startpos - 1) + Receivemsg.Substring(Endpos + 1);
+                            Startpos = Receivemsg.IndexOf(ETB);
+                            if (Startpos >= 0)
+                            {
+                                Endpos = Receivemsg.IndexOf(STX, Startpos);
+                            }
+
+                        }
+                    }
+
+                    //
+
                     Endpos = Receivemsg.IndexOf(ETX);
                     Startpos = Receivemsg.IndexOf(STX);
+
+                    while (Endpos >= 0 && Startpos >= 0)
+                    {
+
+                        if (LastRec == ENQ)
+                        {
+                            ReceiveBuffer += FS + "[" + Receivemsg.Substring(Startpos + 1, Endpos - 2) + "]";
+                        }
+                        else
+                        {
+                            ReceiveBuffer += "[" + Receivemsg.Substring(Startpos + 1, Endpos - 2) + "]";
+                        }
+                        LastRec = Receivemsg.Substring(Startpos + 1, Endpos - 2);
+                        Endpos = Receivemsg.IndexOf(CR + LF);
+                        Receivemsg = Receivemsg.Substring(Endpos + 2);
+                        Endpos = Receivemsg.IndexOf(ETX);
+                        Startpos = Receivemsg.IndexOf(STX);
+                    }
+
+
+
+
+                    //处理接收一半的情况
+                    if (Endpos < 0 && Startpos >= 0)
+                    {
+                        Send(ACK);
+                        LastSend = ACK;
+                    }
+                    else
+                    {
+                        Send(ACK);
+                        LastSend = ACK;
+                    }
+
+
                 }
-
-
-
-
-                //处理接收一半的情况
-                if (Endpos < 0 && Startpos >= 0)
-                {
-                    Send(ACK);
-                    LastSend = ACK;
-                }
-                else
-                {
-                    Send(ACK);
-                    LastSend = ACK;
-                }
-
-
-            }
 
                 int pos = 0;
-            //垃圾数据处理
-            if (BSend == true && BRec == false)
-            {
-
-                pos = Receivemsg.IndexOf(ACK);
-                if (pos < 0)
+                //垃圾数据处理
+                if (BSend == true && BRec == false)
                 {
-                    Receivemsg = "";
+
+                    pos = Receivemsg.IndexOf(ACK);
+                    if (pos < 0)
+                    {
+                        Receivemsg = "";
+                    }
+                    else if (pos == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        Receivemsg.Substring(pos);
+                    }
                 }
-                else if (pos == 0)
+                else if (BRec == true && BSend == false)
                 {
+                    if (Receivemsg.IndexOf(STX) < 0 && Receivemsg.IndexOf(ETX) < 0 && Receivemsg.IndexOf(LF) < 0 && Receivemsg.IndexOf(CR) < 0 && Receivemsg.IndexOf(EOT) < 0 && Receivemsg.IndexOf(ACK) < 0)
+                    {
+                        Receivemsg = "";
+                    }
+                    //if (Receivemsg.IndexOf(EOT) >= 0&& Receivemsg.IndexOf(LF) < 0&& Receivemsg.IndexOf(CR) < 0)
+                    //{
 
+                    //}
                 }
                 else
                 {
-                    Receivemsg.Substring(pos);
+                    pos = Receivemsg.IndexOf(ENQ);
+                    if (pos < 0)
+                    {
+                        Receivemsg = "";
+                        return;
+                    }
                 }
             }
-            else if (BRec == true && BSend == false)
+            catch(Exception e)
             {
-                if (Receivemsg.IndexOf(STX) < 0 && Receivemsg.IndexOf(ETX) < 0 && Receivemsg.IndexOf(LF) < 0 && Receivemsg.IndexOf(CR) < 0 && Receivemsg.IndexOf(EOT) < 0 && Receivemsg.IndexOf(ACK) < 0)
-                {
-                    Receivemsg = "";
-                }
-                //if (Receivemsg.IndexOf(EOT) >= 0&& Receivemsg.IndexOf(LF) < 0&& Receivemsg.IndexOf(CR) < 0)
-                //{
-
-                //}
+                GlobalValue.WriteLog(e.Message + "\r\n", "SystemError.log");
             }
-            else
-            {
-                pos = Receivemsg.IndexOf(ENQ);
-                if (pos < 0)
-                {
-                    Receivemsg = "";
-                    return;
-                }
-            }
-
                 #endregion
             
         }
         private void Send(string msg)
         {
-            //等待直到退出或可发送
-            while (!TcpConnect.Canwrite)
+            try
             {
-                if (STOP) return;
-                Thread.Sleep(10);
+                //等待直到退出或可发送
+                while (!TcpConnect.Canwrite)
+                {
+                    if (STOP) return;
+                    Thread.Sleep(10);
+                }
+                TcpConnect.TcpSend(msg);
+                LOG(msg, "S");
             }
-            TcpConnect.TcpSend(msg);
-            LOG(msg, "S");
-            
+            catch (Exception e)
+            {
+                GlobalValue.WriteLog(e.Message + "\r\n", "SystemError.log");
+            }
             
 
         }
         private string Receive()
         {
-            string tmp = "";
-            tmp = TcpConnect.TcpRead();
-            if (tmp == "" || tmp == null)
+            try
             {
+                string tmp = "";
+                tmp = TcpConnect.TcpRead();
+                if (tmp == "" || tmp == null)
+                {
+                    return "";
+                }
+                Receivemsg += tmp;
+                LOG(tmp, "R");
+                //LastRec = tmp;
+
+                return tmp;
+            }
+            catch(Exception e)
+            {
+                GlobalValue.WriteLog(e.Message + "\r\n", "SystemError.log");
                 return "";
             }
-            Receivemsg += tmp;
-            LOG(tmp, "R");
-            //LastRec = tmp;
-            
-            return tmp;
             
         }
 

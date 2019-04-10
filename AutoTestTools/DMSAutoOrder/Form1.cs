@@ -161,48 +161,65 @@ namespace DMSAutoOrder
         {
             while (BStart)
             {
-                string sid,sampletype,oid;
-                string sql = "select codsid,codoid from "+ MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from "+MysqlClass.DBname+".orders,"+MysqlClass.DBname+".anagpatient where " +MysqlClass.DBname +".orders.codaid = " +MysqlClass.DBname +".anagpatient.codaid and "+MysqlClass.DBname+".anagpatient.codpid = 'UNKNOWN') ";
-                sql += " and codsid in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest <> 'UNKN')";
-                sql += " or codoid not in ( select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders )";
-                DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
-                foreach(DataRow r in dt.Rows)
-                {   
-                    while (dmsconnect.SendBuffer != "")
+                try
+                {
+                    string sid, sampletype, oid;
+                    string sql = "select codsid,codoid from " + MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders," + MysqlClass.DBname + ".anagpatient where " + MysqlClass.DBname + ".orders.codaid = " + MysqlClass.DBname + ".anagpatient.codaid and " + MysqlClass.DBname + ".anagpatient.codpid = 'UNKNOWN') ";
+                    sql += " and codsid in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest <> 'UNKN')";
+                    sql += " or codoid not in ( select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders )";
+                    DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
+                    if (dt.Rows.Count > 0)
                     {
-                        Thread.Sleep(10);
-                    }
+                        foreach (DataRow r in dt.Rows)
+                        {
+                            try
+                            {
+                                while (dmsconnect.SendBuffer != "")
+                                {
+                                    Thread.Sleep(10);
+                                }
 
-                    oid = r[1].ToString();
-                    sid = r[0].ToString();
-                    
-                    if (oid == null)
-                    {
-                        oid = "";
+                                oid = r[1].ToString();
+                                sid = r[0].ToString();
+
+                                if (oid == null)
+                                {
+                                    oid = "";
+                                }
+                                string ASTMmessage;
+                                string timestr = DateTime.Today.ToString("yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo) + DateTime.Now.ToString("HHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+                                ValTest(sid);
+                                sampletype = GetSampleType(sid);
+                                if (sampletype == null)
+                                {
+                                    continue;
+                                }
+                                CleanOrdersTable(oid, sid);
+                                ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
+                                ASTMmessage += "P|1|" + oid + "|" + oid + "||Shougong|||F" + GlobalValue.CR;
+                                ASTMmessage += "C|1|L|note:<nlbl:demographic_changed>|G" + GlobalValue.CR;
+                                ASTMmessage += "O|1|" + sid + "||^^^" + STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
+                                ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
+                                dmsconnect.SendBuffer = ASTMmessage;
+                                ASTMmessage = "";
+                                notifyIcon1.BalloonTipTitle = "Notification";
+                                notifyIcon1.BalloonTipText = "Processing Manual Sample :" + sid + " !";
+                                notifyIcon1.ShowBalloonTip(100);
+                            }
+                            catch (Exception e)
+                            {
+                                GlobalValue.WriteLog("Form1.process" + e.Message + "\r\n", "SystemError.log");
+                            }
+                            Thread.Sleep(50);
+                        }
                     }
-                    string ASTMmessage;
-                    string timestr = DateTime.Today.ToString("yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo) + DateTime.Now.ToString("HHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
-                    ValTest(sid);
-                    sampletype = GetSampleType(sid);
-                    if (sampletype == null)
-                    {
-                        continue;
-                    }
-                    CleanOrdersTable(oid, sid);
-                    ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
-                    ASTMmessage += "P|1|" + oid +"|"+ oid +"||Shougong|||F" + GlobalValue.CR;
-                    ASTMmessage += "C|1|L|note:<nlbl:demographic_changed>|G" + GlobalValue.CR;
-                    ASTMmessage += "O|1|" + sid + "||^^^"+ STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
-                    ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
-                    dmsconnect.SendBuffer = ASTMmessage;
-                    ASTMmessage = "";
-                    notifyIcon1.BalloonTipTitle = "Notification";
-                    notifyIcon1.BalloonTipText = "Processing Manual Sample :" + sid + " !";
-                    notifyIcon1.ShowBalloonTip(100);
-                    Thread.Sleep(50);
+                    Thread.Sleep(6000);
+                    ChangeWrongStatusSampleToHostFlg();
                 }
-                Thread.Sleep(6000);
-                ChangeWrongStatusSampleToHostFlg();
+                catch(Exception e)
+                {
+                    GlobalValue.WriteLog("Form1.process" + e.Message + "\r\n", "SystemError.log");
+                }
             }
             
         }
