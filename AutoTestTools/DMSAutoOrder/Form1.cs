@@ -16,7 +16,8 @@ namespace DMSAutoOrder
     public partial class Form1 : Form
     {
         public Boolean BAutoStart, BSameIP, BStart;
-        public string STestCode,SampleIDLen;
+        public string STestCode,SampleIDLen,AutoModifyTestStatus;
+        public Dictionary<string, string> DAutoModifyTestStatus = new Dictionary<string, string>();
         public string inifile = System.Environment.CurrentDirectory + "\\Setting.ini";
         public DMSConnector dmsconnect;
         public Form1()
@@ -24,6 +25,19 @@ namespace DMSAutoOrder
             InitializeComponent();
         }
 
+        public void FormInit()
+        {
+            DAutoModifyTestStatus.Clear();
+            DAutoModifyTestStatus.Add("1", "Do Not Change The Status");
+            DAutoModifyTestStatus.Add("2", "Change H status to 0");
+            DAutoModifyTestStatus.Add("3", "Change Test Status To F");
+            CBD_ModifyStatus.Items.Clear();
+
+            foreach (var item in DAutoModifyTestStatus)
+            {
+                CBD_ModifyStatus.Items.Add(item.Value);
+            }
+        }
 
         public void LoadSetting()
         {
@@ -31,8 +45,11 @@ namespace DMSAutoOrder
             FileInfo fi = new FileInfo(inifile);
             if (!fi.Exists)
             {
-                return;
+                fi.Create();
+                //return;
             }
+            
+            
 
             MysqlClass.DBname = iniManager.GetString("DB", "DBName", "DMS");
             MysqlClass.DBIP = iniManager.GetString("DB", "DBIP", "127.0.0.1");
@@ -45,6 +62,8 @@ namespace DMSAutoOrder
             BAutoStart = (iniManager.GetString("SYS", "AutoStart", "0") == "1");
             BSameIP = (iniManager.GetString("SYS", "SameIP", "0") == "1");
             SampleIDLen = iniManager.GetString("DMS", "SampleIDLen", "0");
+            //1,don't modify status 2,change send to host status to 0,resend result 3,change test status to final
+            AutoModifyTestStatus = iniManager.GetString("DMS", "AutoModifyTestStatus", "2");
         }
 
         private void RB_Client_CheckedChanged(object sender, EventArgs e)
@@ -97,6 +116,7 @@ namespace DMSAutoOrder
         private void Form1_Load(object sender, EventArgs e)
         {
             dmsconnect = new DMSConnector();
+            FormInit();
             LoadSetting();
             TB_IP.Text = dmsconnect.IPaddr;
             TB_Port.Text = dmsconnect.PortNo;
@@ -109,6 +129,7 @@ namespace DMSAutoOrder
             TB_SendTestCode.Text = STestCode;
             RB_Client.Checked = !dmsconnect.ConnectMode;
             RB_Server.Checked = dmsconnect.ConnectMode;
+            CBD_ModifyStatus.Text = DAutoModifyTestStatus[AutoModifyTestStatus];
             BStart = false;
             if (BAutoStart)
             {
@@ -317,8 +338,33 @@ namespace DMSAutoOrder
         private void ChangeWrongStatusSampleToHostFlg()
         {
             string sql;
-            sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where(flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost <> 0";
-            MysqlClass.ExecuteSQL(sql);
+            if (AutoModifyTestStatus == "1")
+            {
+                return;
+            }
+            if (AutoModifyTestStatus == "2")
+            {
+                sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where(flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost <> 0";
+                MysqlClass.ExecuteSQL(sql);
+            }
+            if (AutoModifyTestStatus == "3")
+            {
+                //sql = "update " + MysqlClass.DBname + ".reqtestresult set  " + MysqlClass.DBname + ".reqtestresult.flgstatus = 'F' " +
+                //    "where " + MysqlClass.DBname + ".reqtestresult.codsid =  " + MysqlClass.DBname + ".reqtest.codsid " +
+                //    " and " + MysqlClass.DBname + ".reqtestresult.codtest =  " + MysqlClass.DBname + ".reqtest.codtest " +
+                //    " and (" + MysqlClass.DBname + ".reqtestresult.flgstatus = 'V' or " + MysqlClass.DBname + ".reqtestresult.flgstatus = 'X' or " + MysqlClass.DBname + ".reqtestresult.flgstatus = 'Y' or " + MysqlClass.DBname + ".reqtestresult.flgstatus = 'Z' ) " +
+                //    "and " + MysqlClass.DBname + ".reqtest.flgtohost <> 0";
+                sql = "update " + MysqlClass.DBname + ".reqtestresult," + MysqlClass.DBname + ".reqtest  set  reqtestresult.flgstatus = 'F' " +
+                    "where reqtestresult.codsid = reqtest.codsid " +
+                    " and reqtestresult.codtest = reqtest.codtest " +
+                    " and (reqtestresult.flgstatus = 'V' or reqtestresult.flgstatus = 'X' or reqtestresult.flgstatus = 'Y' or reqtestresult.flgstatus = 'Z' ) " +
+                    "and reqtest.flgtohost <> 0";
+                MysqlClass.ExecuteSQL(sql);
+                sql = "update " + MysqlClass.DBname + ".reqtest set flgstatus = 'F' where (flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost <> 0";
+                
+                MysqlClass.ExecuteSQL(sql);
+            }
+
         }
 
         private void TB_DBUser_TextChanged(object sender, EventArgs e)
@@ -423,7 +469,19 @@ namespace DMSAutoOrder
             {
                 iniManager.WriteString("DMS", "ConnectMode", "1");
             }
+            string dropdownlistvalues = CBD_ModifyStatus.Text;
+            foreach (var item in DAutoModifyTestStatus)
+            {
+                if (item.Value == dropdownlistvalues)
+                {
+                    AutoModifyTestStatus = item.Key;
+                    iniManager.WriteString("DMS", "AutoModifyTestStatus", AutoModifyTestStatus);
+                }
+            }
+
             LoadSetting();
         }
+
+        
     }
 }

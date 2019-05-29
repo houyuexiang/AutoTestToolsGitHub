@@ -45,6 +45,10 @@ namespace DMSAutoOrder
         {
             StringBuilder temp = new StringBuilder(1024);
             GetPrivateProfileString(section, key, def, temp, 1024, fileName);
+            if (temp.ToString() == null)
+            {
+                return def;
+            }
             return temp.ToString();
         }
         public static void WriteInt(string section, string key, int iVal)

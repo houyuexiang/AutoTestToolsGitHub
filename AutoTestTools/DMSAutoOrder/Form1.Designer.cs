@@ -57,6 +57,8 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label8 = new System.Windows.Forms.Label();
+            this.CBD_ModifyStatus = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -65,7 +67,7 @@
             // 
             // B_Start
             // 
-            this.B_Start.Location = new System.Drawing.Point(475, 366);
+            this.B_Start.Location = new System.Drawing.Point(475, 408);
             this.B_Start.Name = "B_Start";
             this.B_Start.Size = new System.Drawing.Size(140, 43);
             this.B_Start.TabIndex = 14;
@@ -271,7 +273,7 @@
             // CB_AutoStart
             // 
             this.CB_AutoStart.AutoSize = true;
-            this.CB_AutoStart.Location = new System.Drawing.Point(21, 335);
+            this.CB_AutoStart.Location = new System.Drawing.Point(21, 355);
             this.CB_AutoStart.Name = "CB_AutoStart";
             this.CB_AutoStart.Size = new System.Drawing.Size(124, 22);
             this.CB_AutoStart.TabIndex = 12;
@@ -280,7 +282,7 @@
             // 
             // B_Save
             // 
-            this.B_Save.Location = new System.Drawing.Point(201, 366);
+            this.B_Save.Location = new System.Drawing.Point(201, 408);
             this.B_Save.Name = "B_Save";
             this.B_Save.Size = new System.Drawing.Size(140, 43);
             this.B_Save.TabIndex = 13;
@@ -321,12 +323,37 @@
             this.toolStripMenuItem2.Text = "Exit";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(218, 359);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(341, 18);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Automaticly Modify Wrong Test Status:";
+            // 
+            // CBD_ModifyStatus
+            // 
+            this.CBD_ModifyStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBD_ModifyStatus.FormattingEnabled = true;
+            this.CBD_ModifyStatus.Items.AddRange(new object[] {
+            "Do Not Change The Status",
+            "Modify Send To Host Status to 0",
+            "Modify Test Status To Final"});
+            this.CBD_ModifyStatus.Location = new System.Drawing.Point(574, 357);
+            this.CBD_ModifyStatus.Name = "CBD_ModifyStatus";
+            this.CBD_ModifyStatus.Size = new System.Drawing.Size(253, 26);
+            this.CBD_ModifyStatus.Sorted = true;
+            this.CBD_ModifyStatus.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 436);
+            this.ClientSize = new System.Drawing.Size(889, 481);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.CBD_ModifyStatus);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.B_Save);
             this.Controls.Add(this.CB_AutoStart);
             this.Controls.Add(this.groupBox2);
@@ -380,6 +407,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox CBD_ModifyStatus;
     }
 }
 
