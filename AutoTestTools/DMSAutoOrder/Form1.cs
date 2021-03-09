@@ -16,7 +16,7 @@ namespace DMSAutoOrder
     public partial class Form1 : Form
     {
         public Boolean BAutoStart, BSameIP, BStart;
-        public string STestCode,SampleIDLen,AutoModifyTestStatus;
+        public string STestCode,SampleIDLen,AutoModifyTestStatus,IgnoreFlagList;
         public Dictionary<string, string> DAutoModifyTestStatus = new Dictionary<string, string>();
         public string inifile = System.Environment.CurrentDirectory + "\\Setting.ini";
         public DMSConnector dmsconnect;
@@ -62,6 +62,7 @@ namespace DMSAutoOrder
             BAutoStart = (iniManager.GetString("SYS", "AutoStart", "0") == "1");
             BSameIP = (iniManager.GetString("SYS", "SameIP", "0") == "1");
             SampleIDLen = iniManager.GetString("DMS", "SampleIDLen", "0");
+            IgnoreFlagList = iniManager.GetString("DMS", "IgnoreFlagList", "");
             //1,don't modify status 2,change send to host status to 0,resend result 3,change test status to final
             AutoModifyTestStatus = iniManager.GetString("DMS", "AutoModifyTestStatus", "2");
         }
@@ -102,6 +103,8 @@ namespace DMSAutoOrder
             RB_Server.Enabled = !canmodify;
             CB_AutoStart.Enabled = !canmodify;
             CB_SameIP.Enabled = !canmodify;
+            CBD_ModifyStatus.Enabled = !canmodify;
+            TB_IgnoreDMSFlagList.Enabled = !canmodify;
             if (CB_SameIP.Checked)
             {
                 TB_DBIP.ReadOnly = false;
@@ -130,6 +133,7 @@ namespace DMSAutoOrder
             RB_Client.Checked = !dmsconnect.ConnectMode;
             RB_Server.Checked = dmsconnect.ConnectMode;
             CBD_ModifyStatus.Text = DAutoModifyTestStatus[AutoModifyTestStatus];
+            TB_IgnoreDMSFlagList.Text = IgnoreFlagList;
             BStart = false;
             if (BAutoStart)
             {
@@ -236,6 +240,9 @@ namespace DMSAutoOrder
                     }
                     Thread.Sleep(6000);
                     ChangeWrongStatusSampleToHostFlg();
+                    Thread.Sleep(6000);
+                    ValIgnoreFlagResult();
+
                 }
                 catch(Exception e)
                 {
@@ -334,6 +341,15 @@ namespace DMSAutoOrder
             sql = "Update " + MysqlClass.DBname + ".reqtest set flgstatus = 'V' where codsid = '" + SID + "' and flgstatus = 'H'";
             MysqlClass.ExecuteSQL(sql);
         }
+        private void ValTestResult(string SID,string Testcode)
+        {
+            string sql;
+            sql = "Update " + MysqlClass.DBname + ".reqtestresult set flgstatus = 'V' where codsid = '" + SID + "' and codtest = '" + Testcode + "'";
+            MysqlClass.ExecuteSQL(sql);
+            sql = "Update " + MysqlClass.DBname + ".reqtest set flgstatus = 'V',flgtohost = 0  where codsid = '" + SID + "' and codtest = '" + Testcode + "'";
+            MysqlClass.ExecuteSQL(sql);
+
+        }
 
         private void ChangeWrongStatusSampleToHostFlg()
         {
@@ -344,7 +360,9 @@ namespace DMSAutoOrder
             }
             if (AutoModifyTestStatus == "2")
             {
-                sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where(flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost <> 0";
+                sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where flgststus in ('V','X','Y','Z') and flgtohost <> 0";
+                MysqlClass.ExecuteSQL(sql);
+                sql = "update " + MysqlClass.DBname + ".reqtest t, " + MysqlClass.DBname + ".reqtestresult r set t.flgtohost = 0, t.flgstatus = 'V' where  t.codsid = r.codsid and t.codtest = r.codtest and t.flgstatus <> r.flgstatus and t.flgstatus='F'";
                 MysqlClass.ExecuteSQL(sql);
             }
             if (AutoModifyTestStatus == "3")
@@ -357,14 +375,51 @@ namespace DMSAutoOrder
                 sql = "update " + MysqlClass.DBname + ".reqtestresult," + MysqlClass.DBname + ".reqtest  set  reqtestresult.flgstatus = 'F' " +
                     "where reqtestresult.codsid = reqtest.codsid " +
                     " and reqtestresult.codtest = reqtest.codtest " +
-                    " and (reqtestresult.flgstatus = 'V' or reqtestresult.flgstatus = 'X' or reqtestresult.flgstatus = 'Y' or reqtestresult.flgstatus = 'Z' ) " +
+                    " and reqtestresult.flgstatus in ('V','X','Y','Z' ) " +
                     "and reqtest.flgtohost <> 0";
                 MysqlClass.ExecuteSQL(sql);
-                sql = "update " + MysqlClass.DBname + ".reqtest set flgstatus = 'F' where (flgstatus = 'V' or flgstatus = 'X' or flgstatus = 'Y' or flgstatus = 'Z') and flgtohost <> 0";
+                sql = "update " + MysqlClass.DBname + ".reqtest set flgstatus = 'F' where flgststus in ('V','X','Y','Z') and flgtohost <> 0";
                 
                 MysqlClass.ExecuteSQL(sql);
             }
 
+        }
+
+        private void ValIgnoreFlagResult()
+        {
+            if (IgnoreFlagList == "")
+            {
+                return;
+            }
+            string sql;
+            string[] ingroeflaglist = IgnoreFlagList.Split(',');
+            sql = "select codsid, codtest, jsnflaginstrument from " + MysqlClass.DBname + ".reqtestresult where flgstatus not in  ('F','V','X','Y','Z')";
+            DataTable dt_holdresult = MysqlClass.GetDataTable(sql, "holdresult");
+            foreach(DataRow r in dt_holdresult.Rows)
+            {
+                string codsid = r[0].ToString();
+                string codtest = r[1].ToString();
+                string jsnflaginstrument = r[2].ToString();
+                Boolean B_NeedModify = false;
+                if (jsnflaginstrument.IndexOf("[") == 0)
+                {
+                    jsnflaginstrument = jsnflaginstrument.Substring(1, jsnflaginstrument.Length - 2);
+                    jsnflaginstrument = jsnflaginstrument.Replace('"'.ToString(), string.Empty);
+                    string[] flagarray = jsnflaginstrument.Split(',');
+                    foreach(string flag in flagarray)
+                    {
+                        if (ingroeflaglist.Contains(flag))
+                        {
+                            B_NeedModify = true;
+                            break;
+                        }
+                    }
+                    if(B_NeedModify)
+                    {
+                        ValTestResult(codsid, codtest);
+                    }
+                }
+            }
         }
 
         private void TB_DBUser_TextChanged(object sender, EventArgs e)
@@ -392,6 +447,8 @@ namespace DMSAutoOrder
             this.WindowState = FormWindowState.Normal;
             toolStripMenuItem1.Text = "Hide";
         }
+
+      
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -478,6 +535,7 @@ namespace DMSAutoOrder
                     iniManager.WriteString("DMS", "AutoModifyTestStatus", AutoModifyTestStatus);
                 }
             }
+            iniManager.WriteString("DMS", "IgnoreFlagList", TB_IgnoreDMSFlagList.Text);
 
             LoadSetting();
         }

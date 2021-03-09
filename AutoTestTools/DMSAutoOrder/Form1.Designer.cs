@@ -59,17 +59,23 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.label8 = new System.Windows.Forms.Label();
             this.CBD_ModifyStatus = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.TB_IgnoreDMSFlagList = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // B_Start
             // 
-            this.B_Start.Location = new System.Drawing.Point(475, 408);
+            this.B_Start.Location = new System.Drawing.Point(734, 65);
+            this.B_Start.Margin = new System.Windows.Forms.Padding(2);
             this.B_Start.Name = "B_Start";
-            this.B_Start.Size = new System.Drawing.Size(140, 43);
+            this.B_Start.Size = new System.Drawing.Size(93, 29);
             this.B_Start.TabIndex = 14;
             this.B_Start.Text = "Start";
             this.B_Start.UseVisualStyleBackColor = true;
@@ -78,48 +84,54 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 43);
+            this.label1.Location = new System.Drawing.Point(11, 29);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 18);
+            this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "IP Address";
             // 
             // TB_IP
             // 
-            this.TB_IP.Location = new System.Drawing.Point(132, 37);
+            this.TB_IP.Location = new System.Drawing.Point(88, 25);
+            this.TB_IP.Margin = new System.Windows.Forms.Padding(2);
             this.TB_IP.Name = "TB_IP";
-            this.TB_IP.Size = new System.Drawing.Size(204, 28);
+            this.TB_IP.Size = new System.Drawing.Size(137, 21);
             this.TB_IP.TabIndex = 1;
             // 
             // TB_Port
             // 
-            this.TB_Port.Location = new System.Drawing.Point(132, 89);
+            this.TB_Port.Location = new System.Drawing.Point(88, 59);
+            this.TB_Port.Margin = new System.Windows.Forms.Padding(2);
             this.TB_Port.Name = "TB_Port";
-            this.TB_Port.Size = new System.Drawing.Size(204, 28);
+            this.TB_Port.Size = new System.Drawing.Size(137, 21);
             this.TB_Port.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 95);
+            this.label2.Location = new System.Drawing.Point(11, 63);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 18);
+            this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "PortNo";
             // 
             // TB_DBIP
             // 
-            this.TB_DBIP.Location = new System.Drawing.Point(175, 35);
+            this.TB_DBIP.Location = new System.Drawing.Point(117, 23);
+            this.TB_DBIP.Margin = new System.Windows.Forms.Padding(2);
             this.TB_DBIP.Name = "TB_DBIP";
-            this.TB_DBIP.Size = new System.Drawing.Size(218, 28);
+            this.TB_DBIP.Size = new System.Drawing.Size(147, 21);
             this.TB_DBIP.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 40);
+            this.label3.Location = new System.Drawing.Point(4, 27);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(107, 18);
+            this.label3.Size = new System.Drawing.Size(71, 12);
             this.label3.TabIndex = 5;
             this.label3.Text = "Database IP";
             // 
@@ -132,27 +144,31 @@
             this.groupBox1.Controls.Add(this.TB_IP);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.TB_Port);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 317);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(289, 211);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DMS Connect";
             // 
             // TB_SendTestCode
             // 
-            this.TB_SendTestCode.Location = new System.Drawing.Point(209, 223);
+            this.TB_SendTestCode.Location = new System.Drawing.Point(139, 149);
+            this.TB_SendTestCode.Margin = new System.Windows.Forms.Padding(2);
             this.TB_SendTestCode.Name = "TB_SendTestCode";
-            this.TB_SendTestCode.Size = new System.Drawing.Size(145, 28);
+            this.TB_SendTestCode.Size = new System.Drawing.Size(98, 21);
             this.TB_SendTestCode.TabIndex = 5;
             this.TB_SendTestCode.Text = "PARK";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 227);
+            this.label7.Location = new System.Drawing.Point(10, 151);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(170, 18);
+            this.label7.Size = new System.Drawing.Size(113, 12);
             this.label7.TabIndex = 16;
             this.label7.Text = "Send Add Test Code";
             // 
@@ -160,17 +176,19 @@
             // 
             this.panel1.Controls.Add(this.RB_Server);
             this.panel1.Controls.Add(this.RB_Client);
-            this.panel1.Location = new System.Drawing.Point(19, 139);
+            this.panel1.Location = new System.Drawing.Point(13, 93);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(327, 58);
+            this.panel1.Size = new System.Drawing.Size(218, 39);
             this.panel1.TabIndex = 5;
             // 
             // RB_Server
             // 
             this.RB_Server.AutoSize = true;
-            this.RB_Server.Location = new System.Drawing.Point(185, 17);
+            this.RB_Server.Location = new System.Drawing.Point(123, 11);
+            this.RB_Server.Margin = new System.Windows.Forms.Padding(2);
             this.RB_Server.Name = "RB_Server";
-            this.RB_Server.Size = new System.Drawing.Size(87, 22);
+            this.RB_Server.Size = new System.Drawing.Size(59, 16);
             this.RB_Server.TabIndex = 4;
             this.RB_Server.TabStop = true;
             this.RB_Server.Text = "Server";
@@ -181,9 +199,10 @@
             // 
             this.RB_Client.AutoSize = true;
             this.RB_Client.Checked = true;
-            this.RB_Client.Location = new System.Drawing.Point(27, 17);
+            this.RB_Client.Location = new System.Drawing.Point(18, 11);
+            this.RB_Client.Margin = new System.Windows.Forms.Padding(2);
             this.RB_Client.Name = "RB_Client";
-            this.RB_Client.Size = new System.Drawing.Size(87, 22);
+            this.RB_Client.Size = new System.Drawing.Size(59, 16);
             this.RB_Client.TabIndex = 3;
             this.RB_Client.TabStop = true;
             this.RB_Client.Text = "Client";
@@ -201,9 +220,11 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.TB_DBIP);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(434, 13);
+            this.groupBox2.Location = new System.Drawing.Point(11, 238);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(429, 316);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(286, 211);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "DMS Database Connect";
@@ -211,9 +232,10 @@
             // CB_SameIP
             // 
             this.CB_SameIP.AutoSize = true;
-            this.CB_SameIP.Location = new System.Drawing.Point(9, 83);
+            this.CB_SameIP.Location = new System.Drawing.Point(6, 55);
+            this.CB_SameIP.Margin = new System.Windows.Forms.Padding(2);
             this.CB_SameIP.Name = "CB_SameIP";
-            this.CB_SameIP.Size = new System.Drawing.Size(250, 22);
+            this.CB_SameIP.Size = new System.Drawing.Size(168, 16);
             this.CB_SameIP.TabIndex = 8;
             this.CB_SameIP.Text = "DB IP Same As Connect IP";
             this.CB_SameIP.UseVisualStyleBackColor = true;
@@ -221,42 +243,47 @@
             // 
             // TB_DBPW
             // 
-            this.TB_DBPW.Location = new System.Drawing.Point(175, 193);
+            this.TB_DBPW.Location = new System.Drawing.Point(117, 129);
+            this.TB_DBPW.Margin = new System.Windows.Forms.Padding(2);
             this.TB_DBPW.Name = "TB_DBPW";
-            this.TB_DBPW.Size = new System.Drawing.Size(218, 28);
+            this.TB_DBPW.Size = new System.Drawing.Size(147, 21);
             this.TB_DBPW.TabIndex = 10;
             this.TB_DBPW.Text = "lINEA_3";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 195);
+            this.label6.Location = new System.Drawing.Point(7, 130);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(161, 18);
+            this.label6.Size = new System.Drawing.Size(107, 12);
             this.label6.TabIndex = 13;
             this.label6.Text = "Database Password";
             // 
             // TB_DBname
             // 
-            this.TB_DBname.Location = new System.Drawing.Point(175, 253);
+            this.TB_DBname.Location = new System.Drawing.Point(117, 169);
+            this.TB_DBname.Margin = new System.Windows.Forms.Padding(2);
             this.TB_DBname.Name = "TB_DBname";
-            this.TB_DBname.Size = new System.Drawing.Size(218, 28);
+            this.TB_DBname.Size = new System.Drawing.Size(147, 21);
             this.TB_DBname.TabIndex = 11;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 257);
+            this.label5.Location = new System.Drawing.Point(4, 171);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(116, 18);
+            this.label5.Size = new System.Drawing.Size(77, 12);
             this.label5.TabIndex = 11;
             this.label5.Text = "DatabaseName";
             // 
             // TB_DBUser
             // 
-            this.TB_DBUser.Location = new System.Drawing.Point(175, 128);
+            this.TB_DBUser.Location = new System.Drawing.Point(117, 85);
+            this.TB_DBUser.Margin = new System.Windows.Forms.Padding(2);
             this.TB_DBUser.Name = "TB_DBUser";
-            this.TB_DBUser.Size = new System.Drawing.Size(218, 28);
+            this.TB_DBUser.Size = new System.Drawing.Size(147, 21);
             this.TB_DBUser.TabIndex = 9;
             this.TB_DBUser.Text = "root";
             this.TB_DBUser.TextChanged += new System.EventHandler(this.TB_DBUser_TextChanged);
@@ -264,27 +291,30 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 131);
+            this.label4.Location = new System.Drawing.Point(4, 87);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 18);
+            this.label4.Size = new System.Drawing.Size(107, 12);
             this.label4.TabIndex = 9;
             this.label4.Text = "Database UserName";
             // 
             // CB_AutoStart
             // 
             this.CB_AutoStart.AutoSize = true;
-            this.CB_AutoStart.Location = new System.Drawing.Point(21, 355);
+            this.CB_AutoStart.Location = new System.Drawing.Point(14, 60);
+            this.CB_AutoStart.Margin = new System.Windows.Forms.Padding(2);
             this.CB_AutoStart.Name = "CB_AutoStart";
-            this.CB_AutoStart.Size = new System.Drawing.Size(124, 22);
+            this.CB_AutoStart.Size = new System.Drawing.Size(84, 16);
             this.CB_AutoStart.TabIndex = 12;
             this.CB_AutoStart.Text = "Auto Start";
             this.CB_AutoStart.UseVisualStyleBackColor = true;
             // 
             // B_Save
             // 
-            this.B_Save.Location = new System.Drawing.Point(201, 408);
+            this.B_Save.Location = new System.Drawing.Point(734, 20);
+            this.B_Save.Margin = new System.Windows.Forms.Padding(2);
             this.B_Save.Name = "B_Save";
-            this.B_Save.Size = new System.Drawing.Size(140, 43);
+            this.B_Save.Size = new System.Drawing.Size(93, 29);
             this.B_Save.TabIndex = 13;
             this.B_Save.Text = "Save";
             this.B_Save.UseVisualStyleBackColor = true;
@@ -306,29 +336,30 @@
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 60);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 48);
             this.contextMenuStrip1.Text = "Menu";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 28);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItem1.Text = "Show";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(126, 28);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItem2.Text = "Exit";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(218, 359);
+            this.label8.Location = new System.Drawing.Point(12, 20);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(341, 18);
+            this.label8.Size = new System.Drawing.Size(227, 12);
             this.label8.TabIndex = 15;
             this.label8.Text = "Automaticly Modify Wrong Test Status:";
             // 
@@ -340,26 +371,69 @@
             "Do Not Change The Status",
             "Modify Send To Host Status to 0",
             "Modify Test Status To Final"});
-            this.CBD_ModifyStatus.Location = new System.Drawing.Point(574, 357);
+            this.CBD_ModifyStatus.Location = new System.Drawing.Point(13, 34);
+            this.CBD_ModifyStatus.Margin = new System.Windows.Forms.Padding(2);
             this.CBD_ModifyStatus.Name = "CBD_ModifyStatus";
-            this.CBD_ModifyStatus.Size = new System.Drawing.Size(253, 26);
+            this.CBD_ModifyStatus.Size = new System.Drawing.Size(384, 20);
             this.CBD_ModifyStatus.Sorted = true;
             this.CBD_ModifyStatus.TabIndex = 16;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.TB_IgnoreDMSFlagList);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.CBD_ModifyStatus);
+            this.groupBox3.Controls.Add(this.CB_AutoStart);
+            this.groupBox3.Location = new System.Drawing.Point(311, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(402, 437);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "DMS Setting";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 96);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(233, 12);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Separated by a comma. e.g. flag1,flag2";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 78);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(335, 12);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Auto Val Results when the following flags are present. ";
+            // 
+            // TB_IgnoreDMSFlagList
+            // 
+            this.TB_IgnoreDMSFlagList.Location = new System.Drawing.Point(13, 110);
+            this.TB_IgnoreDMSFlagList.Margin = new System.Windows.Forms.Padding(2);
+            this.TB_IgnoreDMSFlagList.Name = "TB_IgnoreDMSFlagList";
+            this.TB_IgnoreDMSFlagList.Size = new System.Drawing.Size(384, 21);
+            this.TB_IgnoreDMSFlagList.TabIndex = 14;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 481);
+            this.ClientSize = new System.Drawing.Size(840, 459);
             this.ContextMenuStrip = this.contextMenuStrip1;
-            this.Controls.Add(this.CBD_ModifyStatus);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.B_Save);
-            this.Controls.Add(this.CB_AutoStart);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.B_Start);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DMSAutoOrder";
@@ -373,8 +447,9 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -409,6 +484,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox CBD_ModifyStatus;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox TB_IgnoreDMSFlagList;
     }
 }
 
