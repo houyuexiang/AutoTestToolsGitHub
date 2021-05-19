@@ -15,7 +15,7 @@ namespace DMSAutoOrder
 {
     public partial class Form1 : Form
     {
-        public Boolean BAutoStart, BSameIP, BStart;
+        public Boolean BAutoStart, BSameIP, BStart,BEnableNoWorkorderProcess,BEnablePitStopTableMonitor;
         public string STestCode,SampleIDLen,AutoModifyTestStatus,IgnoreFlagList;
         public Dictionary<string, string> DAutoModifyTestStatus = new Dictionary<string, string>();
         public string inifile = System.Environment.CurrentDirectory + "\\Setting.ini";
@@ -37,6 +37,76 @@ namespace DMSAutoOrder
             {
                 CBD_ModifyStatus.Items.Add(item.Value);
             }
+        }
+
+        private void SaveSetting()
+        {
+            iniManager.WriteString("DB", "DBName", TB_DBname.Text);
+            iniManager.WriteString("DB", "DBIP", TB_DBIP.Text);
+            iniManager.WriteString("DB", "DBUser", TB_DBUser.Text);
+            iniManager.WriteString("DB", "DBPasswd", TB_DBPW.Text);
+            iniManager.WriteString("DMS", "DMSIP", TB_IP.Text);
+            iniManager.WriteString("DMS", "OrderPort", TB_Port.Text);
+            iniManager.WriteString("DMS", "TestCode", TB_SendTestCode.Text);
+
+            if (CB_AutoStart.Checked)
+            {
+                iniManager.WriteString("SYS", "AutoStart", "1");
+            }
+            else
+            {
+                iniManager.WriteString("SYS", "AutoStart", "0");
+            }
+
+            if (CB_SameIP.Checked)
+            {
+                iniManager.WriteString("SYS", "SameIP", "1");
+            }
+            else
+            {
+                iniManager.WriteString("SYS", "SameIP", "0");
+            }
+
+            if (RB_Server.Checked)
+            {
+                iniManager.WriteString("DMS", "ConnectMode", "2");
+            }
+            else
+            {
+                iniManager.WriteString("DMS", "ConnectMode", "1");
+            }
+
+            if (CB_NoWorkOrder.Checked)
+            {
+                iniManager.WriteString("SYS", "EnableNoWorkorderProcess", "1");
+            }
+            else
+            {
+                iniManager.WriteString("SYS", "EnableNoWorkorderProcess", "0");
+            }
+
+            if (CB_EnablePitstopTableMonitor.Checked)
+            {
+                iniManager.WriteString("SYS", "EnablePitStopTableMonitor", "1");
+            }
+            else
+            {
+                iniManager.WriteString("SYS", "EnablePitStopTableMonitor", "0");
+            }
+
+
+            string dropdownlistvalues = CBD_ModifyStatus.Text;
+            foreach (var item in DAutoModifyTestStatus)
+            {
+                if (item.Value == dropdownlistvalues)
+                {
+                    AutoModifyTestStatus = item.Key;
+                    iniManager.WriteString("DMS", "AutoModifyTestStatus", AutoModifyTestStatus);
+                }
+            }
+            iniManager.WriteString("DMS", "IgnoreFlagList", TB_IgnoreDMSFlagList.Text);
+
+            LoadSetting();
         }
 
         public void LoadSetting()
@@ -61,6 +131,10 @@ namespace DMSAutoOrder
             STestCode = iniManager.GetString("DMS", "TestCode", "PARK");
             BAutoStart = (iniManager.GetString("SYS", "AutoStart", "0") == "1");
             BSameIP = (iniManager.GetString("SYS", "SameIP", "0") == "1");
+
+            BEnableNoWorkorderProcess = (iniManager.GetString("SYS", "EnableNoWorkorderProcess", "0") == "1");
+            BEnablePitStopTableMonitor = (iniManager.GetString("SYS", "EnablePitStopTableMonitor", "0") == "1");
+
             SampleIDLen = iniManager.GetString("DMS", "SampleIDLen", "0");
             IgnoreFlagList = iniManager.GetString("DMS", "IgnoreFlagList", "");
             //1,don't modify status 2,change send to host status to 0,resend result 3,change test status to final
@@ -105,6 +179,9 @@ namespace DMSAutoOrder
             CB_SameIP.Enabled = !canmodify;
             CBD_ModifyStatus.Enabled = !canmodify;
             TB_IgnoreDMSFlagList.Enabled = !canmodify;
+            CB_EnablePitstopTableMonitor.Enabled = !canmodify;
+            CB_NoWorkOrder.Enabled = !canmodify;
+
             if (CB_SameIP.Checked)
             {
                 TB_DBIP.ReadOnly = false;
@@ -134,6 +211,8 @@ namespace DMSAutoOrder
             RB_Server.Checked = dmsconnect.ConnectMode;
             CBD_ModifyStatus.Text = DAutoModifyTestStatus[AutoModifyTestStatus];
             TB_IgnoreDMSFlagList.Text = IgnoreFlagList;
+            CB_NoWorkOrder.Checked = BEnableNoWorkorderProcess;
+            CB_EnablePitstopTableMonitor.Checked = BEnablePitStopTableMonitor;
             BStart = false;
             if (BAutoStart)
             {
@@ -175,7 +254,7 @@ namespace DMSAutoOrder
             BStart = true;
             B_Start.Text = "Stop";
             ModifyStatus(true);
-            dmsconnect.MakeASTMConnect();
+            
             Thread t = new Thread(process);
             t.IsBackground = true;
             t.Start();
@@ -184,72 +263,160 @@ namespace DMSAutoOrder
 
         private void process()
         {
+            DbProcesser DdbProcesser = new DbProcesser(bathfunction);
+            if (BEnableNoWorkorderProcess)
+            {
+                dmsconnect.MakeASTMConnect();
+            }
+
             while (BStart)
             {
                 try
                 {
-                    string sid, sampletype, oid;
-                    string sql = "select codsid,codoid from " + MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders," + MysqlClass.DBname + ".anagpatient where " + MysqlClass.DBname + ".orders.codaid = " + MysqlClass.DBname + ".anagpatient.codaid and " + MysqlClass.DBname + ".anagpatient.codpid = 'UNKNOWN') ";
-                    sql += " and codsid in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest <> 'UNKN')";
-                    sql += " or codoid not in ( select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders )";
-                    DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
-                    if (dt.Rows.Count > 0)
-                    {
-                        foreach (DataRow r in dt.Rows)
-                        {
-                            try
-                            {
-                                while (dmsconnect.SendBuffer != "")
-                                {
-                                    Thread.Sleep(10);
-                                }
 
-                                oid = r[1].ToString();
-                                sid = r[0].ToString();
+                    IAsyncResult result = DdbProcesser.BeginInvoke(null, null);
+                    //PitStopTableMonitor();
+                    
+                    NoWorkOrderProcess();
+                    DdbProcesser.EndInvoke(result);
 
-                                if (oid == null)
-                                {
-                                    oid = "";
-                                }
-                                string ASTMmessage;
-                                string timestr = DateTime.Today.ToString("yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo) + DateTime.Now.ToString("HHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
-                                ValTest(sid);
-                                sampletype = GetSampleType(sid);
-                                if (sampletype == null)
-                                {
-                                    continue;
-                                }
-                                CleanOrdersTable(oid, sid);
-                                ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
-                                ASTMmessage += "P|1|" + oid + "|" + oid + "||Shougong|||F" + GlobalValue.CR;
-                                ASTMmessage += "C|1|L|note:<nlbl:demographic_changed>|G" + GlobalValue.CR;
-                                ASTMmessage += "O|1|" + sid + "||^^^" + STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
-                                ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
-                                dmsconnect.SendBuffer = ASTMmessage;
-                                ASTMmessage = "";
-                                notifyIcon1.BalloonTipTitle = "Notification";
-                                notifyIcon1.BalloonTipText = "Processing Manual Sample :" + sid + " !";
-                                notifyIcon1.ShowBalloonTip(100);
-                            }
-                            catch (Exception e)
-                            {
-                                GlobalValue.WriteLog("Form1.process" + e.Message + "\r\n", "SystemError.log");
-                            }
-                            Thread.Sleep(50);
-                        }
-                    }
-                    Thread.Sleep(6000);
-                    ChangeWrongStatusSampleToHostFlg();
-                    Thread.Sleep(6000);
-                    ValIgnoreFlagResult();
+                    Thread.Sleep(60000);
+                    
 
                 }
                 catch(Exception e)
                 {
-                    GlobalValue.WriteLog("Form1.process" + e.Message + "\r\n", "SystemError.log");
+                    GlobalValue.WriteLog("Form1.process " + e.Message + "\r\n", "SystemError.log");
                 }
             }
             
+        }
+
+        private void bathfunction()
+        {
+            ChangeWrongStatusSampleToHostFlg();
+            ValIgnoreFlagResult();
+            PitStopTableMonitor();
+        }
+
+        private delegate void DbProcesser();
+
+
+        private void PitStopTableMonitor()
+        {
+
+            if (!BEnablePitStopTableMonitor)
+            {
+                return;
+            }
+            try
+            {
+                string tablesql;
+                tablesql = new StringBuilder("select table_name from information_schema.tables where table_schema = '").Append(MysqlClass.DBname).Append("' and table_name like 'pitstop%'").ToString();
+                DataTable pitstoplist = MysqlClass.GetDataTable(tablesql, "pitstoptable");
+                foreach (DataRow r in pitstoplist.Rows)
+                {
+                    string sql = new StringBuilder("select count(*),flgrunning from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                    int i = 0, counts;
+                    counts = int.Parse(MysqlClass.GetDataTable(sql, "count").Rows[0][0].ToString());
+                    while (counts > 2 && i < 10)
+                    {
+                        Thread.Sleep(500);
+                        counts = int.Parse(MysqlClass.GetDataTable(sql, "count").Rows[0][0].ToString());
+                        i++;
+
+                    }
+                    if (counts > 2)
+                    {
+                        string sqlr = new StringBuilder("select * from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                        DataTable dt = MysqlClass.GetDataTable(sqlr, "drows");
+                        if (dt.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                StringBuilder sbrowobject = new StringBuilder();
+                                int columnindex = 0;
+                                foreach(object dc in dr.ItemArray)
+                                {
+                                    sbrowobject.Append(dt.Columns[columnindex].ColumnName).Append(":").Append(dc.ToString()).Append(",");
+                                    columnindex++;
+                                }
+
+                                GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " record {" + sbrowobject.ToString() + "} need clean...", "SystemError.log");
+                            }
+
+                            string excutesql = new StringBuilder("delete from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                            MysqlClass.ExecuteSQL(excutesql);
+                            GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " clean...", "SystemError.log");
+                        }
+                    }
+
+
+                }
+            }
+            catch(Exception e)
+            {
+                GlobalValue.WriteLog("Form1.PitStopTableMonitor" + e.Message + "\r\n", "SystemError.log");
+            }
+
+        }
+
+        private void NoWorkOrderProcess()
+        {
+            if (!BEnableNoWorkorderProcess)
+            {
+                return;
+            }
+            string sid, sampletype, oid;
+            string sql = "select codsid,codoid from " + MysqlClass.DBname + ".reqtube where codoid in (select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders," + MysqlClass.DBname + ".anagpatient where " + MysqlClass.DBname + ".orders.codaid = " + MysqlClass.DBname + ".anagpatient.codaid and " + MysqlClass.DBname + ".anagpatient.codpid = 'UNKNOWN') ";
+            sql += " and codsid in (select " + MysqlClass.DBname + ".reqtest.codsid from " + MysqlClass.DBname + ".reqtest where " + MysqlClass.DBname + ".reqtest.codtest <> 'UNKN')";
+            sql += " or codoid not in ( select " + MysqlClass.DBname + ".orders.codoid from " + MysqlClass.DBname + ".orders )";
+            DataTable dt = MysqlClass.GetDataTable(sql, "Orders");
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow r in dt.Rows)
+                {
+                    try
+                    {
+                        while (dmsconnect.SendBuffer != "")
+                        {
+                            Thread.Sleep(10);
+                        }
+
+                        oid = r[1].ToString();
+                        sid = r[0].ToString();
+
+                        if (oid == null)
+                        {
+                            oid = "";
+                        }
+                        string ASTMmessage;
+                        string timestr = DateTime.Today.ToString("yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo) + DateTime.Now.ToString("HHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+                        ValTest(sid);
+                        sampletype = GetSampleType(sid);
+                        if (sampletype == null)
+                        {
+                            continue;
+                        }
+                        CleanOrdersTable(oid, sid);
+                        ASTMmessage = GlobalValue.FS + "[H|\\^&||||||||||P|1|" + timestr + GlobalValue.CR;
+                        ASTMmessage += "P|1|" + oid + "|" + oid + "||Shougong|||F" + GlobalValue.CR;
+                        ASTMmessage += "C|1|L|note:<nlbl:demographic_changed>|G" + GlobalValue.CR;
+                        ASTMmessage += "O|1|" + sid + "||^^^" + STestCode + "|R||" + timestr + "||||N||||" + sampletype + "||U||||||||O" + GlobalValue.CR;
+                        ASTMmessage += "L|1|N" + GlobalValue.CR + "]" + GlobalValue.GS;
+                        dmsconnect.SendBuffer = ASTMmessage;
+                        ASTMmessage = "";
+                        notifyIcon1.BalloonTipTitle = "Notification";
+                        notifyIcon1.BalloonTipText = "Processing Manual Sample :" + sid + " !";
+                        notifyIcon1.ShowBalloonTip(100);
+                    }
+                    catch (Exception e)
+                    {
+                        GlobalValue.WriteLog("Form1.NoWorkOrderProcess " + e.Message + "\r\n", "SystemError.log");
+                    }
+                    Thread.Sleep(50);
+                }
+            }
         }
 
         private string GetSampleType(string SID)
@@ -360,8 +527,9 @@ namespace DMSAutoOrder
             }
             if (AutoModifyTestStatus == "2")
             {
-                sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where flgststus in ('V','X','Y','Z') and flgtohost <> 0";
+                sql = "update " + MysqlClass.DBname + ".reqtest set flgtohost = 0 where flgstatus in ('V','X','Y','Z') and flgtohost <> 0";
                 MysqlClass.ExecuteSQL(sql);
+                Thread.Sleep(20);
                 sql = "update " + MysqlClass.DBname + ".reqtest t, " + MysqlClass.DBname + ".reqtestresult r set t.flgtohost = 0, t.flgstatus = 'V' where  t.codsid = r.codsid and t.codtest = r.codtest and t.flgstatus <> r.flgstatus and t.flgstatus='F'";
                 MysqlClass.ExecuteSQL(sql);
             }
@@ -378,6 +546,7 @@ namespace DMSAutoOrder
                     " and reqtestresult.flgstatus in ('V','X','Y','Z' ) " +
                     "and reqtest.flgtohost <> 0";
                 MysqlClass.ExecuteSQL(sql);
+                Thread.Sleep(20);
                 sql = "update " + MysqlClass.DBname + ".reqtest set flgstatus = 'F' where flgststus in ('V','X','Y','Z') and flgtohost <> 0";
                 
                 MysqlClass.ExecuteSQL(sql);
@@ -487,58 +656,17 @@ namespace DMSAutoOrder
             BStart = false;
             B_Start.Text = "Start";
             ModifyStatus(false);
-            dmsconnect.StopConnector();
+            try
+            {
+                
+                dmsconnect.StopConnector();
+            }
+            catch
+            {
 
+            }
         }
-        private void SaveSetting()
-        {
-            iniManager.WriteString("DB", "DBName", TB_DBname.Text);
-            iniManager.WriteString("DB", "DBIP", TB_DBIP.Text);
-            iniManager.WriteString("DB", "DBUser", TB_DBUser.Text);
-            iniManager.WriteString("DB", "DBPasswd", TB_DBPW.Text);
-            iniManager.WriteString("DMS", "DMSIP", TB_IP.Text);
-            iniManager.WriteString("DMS", "OrderPort", TB_Port.Text);
-            iniManager.WriteString("DMS", "TestCode", TB_SendTestCode.Text);
-
-            if (CB_AutoStart.Checked)
-            {
-                iniManager.WriteString("SYS", "AutoStart", "1");
-            }
-            else
-            {
-                iniManager.WriteString("SYS", "AutoStart", "0");
-            }
-
-            if (CB_SameIP.Checked)
-            {
-                iniManager.WriteString("SYS", "SameIP", "1");
-            }
-            else
-            {
-                iniManager.WriteString("SYS", "SameIP", "0");
-            }
-
-            if (RB_Server.Checked)
-            {
-                iniManager.WriteString("DMS", "ConnectMode", "2");
-            }
-            else
-            {
-                iniManager.WriteString("DMS", "ConnectMode", "1");
-            }
-            string dropdownlistvalues = CBD_ModifyStatus.Text;
-            foreach (var item in DAutoModifyTestStatus)
-            {
-                if (item.Value == dropdownlistvalues)
-                {
-                    AutoModifyTestStatus = item.Key;
-                    iniManager.WriteString("DMS", "AutoModifyTestStatus", AutoModifyTestStatus);
-                }
-            }
-            iniManager.WriteString("DMS", "IgnoreFlagList", TB_IgnoreDMSFlagList.Text);
-
-            LoadSetting();
-        }
+        
 
         
     }
