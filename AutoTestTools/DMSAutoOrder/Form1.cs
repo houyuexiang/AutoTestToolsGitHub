@@ -20,6 +20,7 @@ namespace DMSAutoOrder
         public Dictionary<string, string> DAutoModifyTestStatus = new Dictionary<string, string>();
         public string inifile = System.Environment.CurrentDirectory + "\\Setting.ini";
         public DMSConnector dmsconnect;
+        public Dictionary<string, Dictionary<string, DateTime>> PitStopDictSum = new Dictionary<string, Dictionary<string, DateTime>>();
         public Form1()
         {
             InitializeComponent();
@@ -280,7 +281,7 @@ namespace DMSAutoOrder
                     NoWorkOrderProcess();
                     DdbProcesser.EndInvoke(result);
 
-                    Thread.Sleep(60000);
+                    Thread.Sleep(6000);
                     
 
                 }
@@ -311,45 +312,106 @@ namespace DMSAutoOrder
             }
             try
             {
+
                 string tablesql;
                 tablesql = new StringBuilder("select table_name from information_schema.tables where table_schema = '").Append(MysqlClass.DBname).Append("' and table_name like 'pitstop%'").ToString();
                 DataTable pitstoplist = MysqlClass.GetDataTable(tablesql, "pitstoptable");
+                
                 foreach (DataRow r in pitstoplist.Rows)
                 {
-                    string sql = new StringBuilder("select count(*),flgrunning from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
-                    int i = 0, counts;
-                    counts = int.Parse(MysqlClass.GetDataTable(sql, "count").Rows[0][0].ToString());
-                    while (counts > 2 && i < 10)
+                    string tablename = r[0].ToString();
+                    if (!PitStopDictSum.ContainsKey(tablename))
                     {
-                        Thread.Sleep(500);
-                        counts = int.Parse(MysqlClass.GetDataTable(sql, "count").Rows[0][0].ToString());
-                        i++;
-
+                        PitStopDictSum.Add(tablename, new Dictionary<string, DateTime>());
                     }
-                    if (counts > 2)
+
+                    string sqlr = new StringBuilder("select * from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                    DataTable dt = MysqlClass.GetDataTable(sqlr, "drows");
+
+                    if (!(dt.Rows.Count > 0 ))
                     {
-                        string sqlr = new StringBuilder("select * from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
-                        DataTable dt = MysqlClass.GetDataTable(sqlr, "drows");
-                        if (dt.Rows.Count > 0)
+                        continue;
+                    }
+
+
+                    //string sql = new StringBuilder("select count(*),flgrunning,idpitstop from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                    //int i = 0, counts;
+                    //counts = int.Parse(MysqlClass.GetDataTable(sql, "count").Rows[0][0].ToString());
+                    List<string> idpitstoplist = new List<string>();
+                    foreach(DataRow row in dt.Rows)
+                    {
+                        
+                        string idpitstop = row["idpitstop"].ToString();
+                        idpitstoplist.Add(idpitstop);
+                        DateTime dateTime = DateTime.UtcNow;
+                        if (!PitStopDictSum[tablename].ContainsKey(idpitstop))
                         {
-                            foreach (DataRow dr in dt.Rows)
+                            PitStopDictSum[tablename].Add(idpitstop, dateTime);
+                        }
+                        else
+                        {
+                            if ((dateTime - PitStopDictSum[tablename][idpitstop]).TotalMinutes > 1)
                             {
                                 StringBuilder sbrowobject = new StringBuilder();
                                 int columnindex = 0;
-                                foreach(object dc in dr.ItemArray)
+                                foreach (object dc in row.ItemArray)
                                 {
                                     sbrowobject.Append(dt.Columns[columnindex].ColumnName).Append(":").Append(dc.ToString()).Append(",");
                                     columnindex++;
                                 }
-
                                 GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " record {" + sbrowobject.ToString() + "} need clean...", "SystemError.log");
+                                string excutesql = new StringBuilder("delete from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                                MysqlClass.ExecuteSQL(excutesql);
+                                GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " clean...", "SystemError.log");
+                                PitStopDictSum[tablename].Remove(idpitstop);
+                                idpitstoplist.Remove(idpitstop);
                             }
+                        }
+                        
 
-                            string excutesql = new StringBuilder("delete from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
-                            MysqlClass.ExecuteSQL(excutesql);
-                            GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " clean...", "SystemError.log");
+                    }
+                    foreach (string id in PitStopDictSum[tablename].Keys)
+                    {
+                        if (!idpitstoplist.Contains(id))
+                        {
+                            PitStopDictSum[tablename].Remove(id);
                         }
                     }
+
+
+
+
+                    //while (counts > 2 && i < 10)
+                    //{
+                    //    Thread.Sleep(500);
+                    //    counts = int.Parse(MysqlClass.GetDataTable(sql, "count").Rows[0][0].ToString());
+                    //    i++;
+
+                    //}
+                    //if (counts > 2)
+                    //{
+                    //    string sqlr = new StringBuilder("select * from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                    //    DataTable dt = MysqlClass.GetDataTable(sqlr, "drows");
+                    //    if (dt.Rows.Count > 0)
+                    //    {
+                    //        foreach (DataRow dr in dt.Rows)
+                    //        {
+                    //            StringBuilder sbrowobject = new StringBuilder();
+                    //            int columnindex = 0;
+                    //            foreach(object dc in dr.ItemArray)
+                    //            {
+                    //                sbrowobject.Append(dt.Columns[columnindex].ColumnName).Append(":").Append(dc.ToString()).Append(",");
+                    //                columnindex++;
+                    //            }
+
+                    //            GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " record {" + sbrowobject.ToString() + "} need clean...", "SystemError.log");
+                    //        }
+
+                    //        string excutesql = new StringBuilder("delete from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
+                    //        MysqlClass.ExecuteSQL(excutesql);
+                    //        GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " clean...", "SystemError.log");
+                    //    }
+                    //}
 
 
                 }
