@@ -21,6 +21,9 @@ namespace DMSAutoOrder
         public string inifile = System.Environment.CurrentDirectory + "\\Setting.ini";
         public DMSConnector dmsconnect;
         public Dictionary<string, Dictionary<string, DateTime>> PitStopDictSum = new Dictionary<string, Dictionary<string, DateTime>>();
+        public string AptioConnectString,DeleteTableList,TestTriggerSampleDeletion;
+        public Boolean BSendCancelMessageToAptio;
+        public List<string> TableDeleteSql;
         public Form1()
         {
             InitializeComponent();
@@ -105,7 +108,22 @@ namespace DMSAutoOrder
                     iniManager.WriteString("DMS", "AutoModifyTestStatus", AutoModifyTestStatus);
                 }
             }
+
+            //20210903
             iniManager.WriteString("DMS", "IgnoreFlagList", TB_IgnoreDMSFlagList.Text);
+
+            iniManager.WriteString("Aptio", "AptioConnectString", TB_AptioIP.Text);
+            iniManager.WriteString("DMS", "TestTriggerSampleDeletion", TB_TestTriggerSampleDeletion.Text);
+            if (CB_TTSD_SendCancelMessageToAptio.Checked)
+            {
+                iniManager.WriteString("DMS", "SendCancelMessageToAptio", "1");
+            }
+            else
+            {
+                iniManager.WriteString("DMS", "SendCancelMessageToAptio", "0");
+            }
+
+
 
             LoadSetting();
         }
@@ -140,6 +158,13 @@ namespace DMSAutoOrder
             IgnoreFlagList = iniManager.GetString("DMS", "IgnoreFlagList", "");
             //1,don't modify status 2,change send to host status to 0,resend result 3,change test status to final
             AutoModifyTestStatus = iniManager.GetString("DMS", "AutoModifyTestStatus", "2");
+
+            //20210903
+            AptioConnectString = iniManager.GetString("Aptio", "AptioConnectString","10.0.0.200:2055");
+            DeleteTableList = iniManager.GetString("DMS", "DeleteTableList", "reqtestresult;reqtestresultrerun;reqtestresultunsolicited;reqtestresultrejected;attach;attachrerun;orders;orders_details;orders_tat;reqtube;reqtube_details;reqtube_automation;reqtube_tat;reqtest;reqtest_tat;duplicate;duplicate_tests;awos_hl7;reqtestresult_substance;reqtestresultrerun_substance;reqtestresultunsolicited_substance;reqtestresultrejected_substance;plate_mtp;reqtestresult_aspects;reqtestresultrerun_aspects;reqtestresultunsolicited_aspects;reqtestresultrejected_aspects");
+            TestTriggerSampleDeletion = iniManager.GetString("DMS", "TestTriggerSampleDeletion", "");
+            BSendCancelMessageToAptio = (iniManager.GetString("DMS", "SendCancelMessageToAptio", "0") == "1");
+
         }
 
         private void RB_Client_CheckedChanged(object sender, EventArgs e)
@@ -215,6 +240,12 @@ namespace DMSAutoOrder
             CB_NoWorkOrder.Checked = BEnableNoWorkorderProcess;
             CB_EnablePitstopTableMonitor.Checked = BEnablePitStopTableMonitor;
             BStart = false;
+
+            //20210903
+            TB_AptioIP.Text = AptioConnectString;
+            TB_TestTriggerSampleDeletion.Text = TestTriggerSampleDeletion;
+            CB_TTSD_SendCancelMessageToAptio.Checked = BSendCancelMessageToAptio;
+
             if (BAutoStart)
             {
                 Start();
@@ -265,10 +296,14 @@ namespace DMSAutoOrder
         private void process()
         {
             DbProcesser DdbProcesser = new DbProcesser(bathfunction);
+
             if (BEnableNoWorkorderProcess)
             {
                 dmsconnect.MakeASTMConnect();
             }
+
+
+            TableDeleteSql = MakeDeleteSql();
 
             while (BStart)
             {
@@ -278,7 +313,7 @@ namespace DMSAutoOrder
                     IAsyncResult result = DdbProcesser.BeginInvoke(null, null);
                     //PitStopTableMonitor();
                     
-                    NoWorkOrderProcess();
+                    
                     DdbProcesser.EndInvoke(result);
 
                     Thread.Sleep(6000);
@@ -295,9 +330,11 @@ namespace DMSAutoOrder
 
         private void bathfunction()
         {
+            NoWorkOrderProcess();
             ChangeWrongStatusSampleToHostFlg();
             ValIgnoreFlagResult();
             PitStopTableMonitor();
+            FTestTriggerSampleDeletion();
         }
 
         private delegate void DbProcesser();
@@ -652,6 +689,134 @@ namespace DMSAutoOrder
                 }
             }
         }
+
+
+
+        private void FTestTriggerSampleDeletion()
+        {
+            Dictionary<string, string> TestTimePire = new Dictionary<string, string>();
+            try
+            {
+                Connect aptioconnect;
+                if (BSendCancelMessageToAptio)
+                {
+                    string ip = AptioConnectString.Substring(0, AptioConnectString.IndexOf(":"));
+                    int port = int.Parse(AptioConnectString.Substring(AptioConnectString.IndexOf(":") + 1));
+                    aptioconnect = new SocketClient(ip, port);
+                }
+                string[] tests = TestTriggerSampleDeletion.Split(';');
+                List<string> testlist = new List<string>();
+
+
+                foreach (string test in tests)
+                {
+                    if (!string.IsNullOrEmpty(test))
+                    {
+                        string t = test.Substring(0, test.IndexOf(":"));
+                        string tm = test.Substring(test.IndexOf(":")+1);
+                        if (!TestTimePire.ContainsKey(t))
+                        {
+                            TestTimePire.Add(t, tm);
+                            testlist.Add(t);
+                        }
+                        else
+                        {
+                            TestTimePire[t] = tm;
+                        }
+                        string sql = "select * from " + MysqlClass.DBname + ".reqtest where codtest = '" + t + "' and timestampdiff(MINUTE,datrequest,now()) > " + tm;
+                        DataTable dt = MysqlClass.GetDataTable(sql, "reqtest");
+                        foreach (DataRow r in dt.Rows)
+                        {
+                            string sid = r["codsid"].ToString();
+                            string oid = r["codoid"].ToString();
+                            DeleteSample(sid, oid);
+
+                        }
+                    }
+                }
+
+                
+
+
+
+
+            }
+            catch(Exception e)
+            {
+                GlobalValue.WriteLog("Form1.FTestTriggerSampleDeletion " + e.Message + "\r\n", "SystemError.log");
+            }
+
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TableDeleteSql = MakeDeleteSql();
+            FTestTriggerSampleDeletion();
+        }
+
+        private void DeleteSample(string sid,string oid)
+        {
+            GlobalValue.WriteLog("Test Trigger DeleteSample SID:" + sid + "\r\n", "DeleteSample.log");
+            foreach(string sql in TableDeleteSql)
+            {
+                MysqlClass.ExecuteSQL(string.Format(sql, sid, oid));
+                Thread.Sleep(10);
+            }
+
+        }
+        
+
+
+        private List<string> MakeDeleteSql()
+        {
+            string sql = "select COLUMN_NAME,table_name  FROM information_schema.columns where column_name in ('codsid','codoid') and table_name in (select table_name from information_schema.tables where table_type = 'BASE TABLE' and table_schema = '" + MysqlClass.DBname + "') group by COLUMN_NAME,table_name  order by table_name";
+            DataTable dt = MysqlClass.GetDataTable(sql, "tableinfo");
+            List<string> delstring = new List<string>();
+            string tablename = "", sqltmp = "";
+            
+            foreach (DataRow r in dt.Rows)
+            {
+                if (tablename != r["table_name"].ToString())
+                {
+                    if (sqltmp != "")
+                    {
+                        delstring.Add(sqltmp);
+                        sqltmp = "";
+                    }
+
+                    tablename = r["table_name"].ToString();
+                    sqltmp = "delete from " + MysqlClass.DBname + "." + tablename;
+                    if (r["COLUMN_NAME"].ToString().ToUpper() == "CODSID")
+                    {
+                        sqltmp += " where codsid = '{0}'";
+                    }
+                    if (r["COLUMN_NAME"].ToString().ToUpper() == "CODOID")
+                    {
+                        sqltmp += " where codoid = '{1}'";
+                    }
+
+                }
+                else
+                {
+                    if (r["COLUMN_NAME"].ToString().ToUpper() == "CODSID")
+                    {
+                        sqltmp += " and codsid = '{0}'";
+                    }
+                    if (r["COLUMN_NAME"].ToString().ToUpper() == "CODOID")
+                    {
+                        sqltmp += " and codoid = '{1}'";
+                    }
+                }
+            }
+
+            if (sqltmp!="")
+            {
+                delstring.Add(sqltmp);
+            }
+            return delstring;
+        }
+
 
         private void TB_DBUser_TextChanged(object sender, EventArgs e)
         {

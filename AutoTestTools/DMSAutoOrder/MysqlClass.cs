@@ -14,7 +14,7 @@ namespace DMSAutoOrder
 {
     static class MysqlClass
     {
-        public static string connectstring = "server=127.0.0.1;user id=root;password=root;database=sys";
+        public static string connectstring = "server=127.0.0.1;user id=root;password=root;database=sys;convertzerodatetime=True";
         public static string DBIP, DBUserName, DBPassword;
         public static string DBname;
         public static MySqlCommand dbcommand;
@@ -25,7 +25,7 @@ namespace DMSAutoOrder
             
             try
             {
-                dbconnect = new MySqlConnection("server =" + DBIP + ";user id=" + DBUserName + ";password=" + DBPassword + ";database=" + DBname);
+                dbconnect = new MySqlConnection("server =" + DBIP + ";user id=" + DBUserName + ";password=" + DBPassword + ";database=" + DBname + ";convertzerodatetime=True");
                 dbconnect.Open();
             }
             catch (Exception e)
@@ -49,7 +49,7 @@ namespace DMSAutoOrder
                 {
 
 
-                    dbnconnect = new MySqlConnection("server =" + DBIP + ";user id=" + DBUserName + ";password=" + DBPassword + ";database=" + DBname);
+                    dbnconnect = new MySqlConnection("server =" + DBIP + ";user id=" + DBUserName + ";password=" + DBPassword + ";database=" + DBname + ";convertzerodatetime=True");
 
                     dbnconnect.Open();
                     dbnconnect.ChangeDatabase(DBname);
