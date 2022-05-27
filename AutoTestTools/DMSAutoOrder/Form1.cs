@@ -646,7 +646,7 @@ namespace DMSAutoOrder
                     "and reqtest.flgtohost <> 0";
                 MysqlClass.ExecuteSQL(sql);
                 Thread.Sleep(20);
-                sql = "update " + MysqlClass.DBname + ".reqtest set flgstatus = 'F' where flgststus in ('V','X','Y','Z') and flgtohost <> 0";
+                sql = "update " + MysqlClass.DBname + ".reqtest set flgstatus = 'F' where flgstatus in ('V','X','Y','Z') and flgtohost <> 0";
                 
                 MysqlClass.ExecuteSQL(sql);
             }
