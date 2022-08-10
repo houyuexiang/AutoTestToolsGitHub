@@ -620,6 +620,11 @@ namespace DMSAutoOrder
         private void ChangeWrongStatusSampleToHostFlg()
         {
             string sql;
+            sql  = "delete from " + MysqlClass.DBname + ".reqtestresult where flgstatus in ('E','R','P')  or valresult1 = ''";
+            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            MysqlClass.ExecuteSQL(sql);
+            Thread.Sleep(20);
+
             if (AutoModifyTestStatus == "1")
             {
                 return;
