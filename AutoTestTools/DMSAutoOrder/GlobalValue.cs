@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Win32;
 using System.Data;
+using System.Diagnostics;
 
 namespace DMSAutoOrder
 {
-    class GlobalValue
+    public class GlobalValue
     {
         public static string ENQ = chr(5), ACK = chr(6), STX = chr(2), ETX = chr(3), EOT = chr(4), LF = chr(10), CR = chr(13), NAK = chr(21), ETB = chr(23), FS = chr(28), GS = chr(29);
         private static string[] ASCII = new string[9] { ENQ, ACK, STX, ETX, ETB, LF, CR, EOT, NAK };
         private static List<string> list = ASCII.ToList();
-        public static string LogPath = System.Environment.CurrentDirectory + "\\LOG\\";
+        public static string LogPath = AppDomain.CurrentDomain.BaseDirectory + "\\LOG\\";
         public static List<string> testlist = new List<string>();
-        
+        public static EventLog wlog = new EventLog();
 
         private static string chr(int asciiCode)
         {

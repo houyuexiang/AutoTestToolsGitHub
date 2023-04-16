@@ -9,6 +9,7 @@ using System.Data;
 using System.IO;
 using System.Threading;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace DMSAutoOrder
 {
@@ -30,7 +31,8 @@ namespace DMSAutoOrder
             }
             catch (Exception e)
             {
-                GlobalValue.WriteLog(e.Message + "\r\n", "SQLERRORLOADTABLE.log");
+                GlobalValue.wlog.WriteEntry("SQLERRORLOADTABLE Error:" + e.Message, EventLogEntryType.Error);
+                
                 return null;
             }
             
@@ -49,7 +51,7 @@ namespace DMSAutoOrder
                 {
 
 
-                    dbnconnect = new MySqlConnection("server =" + DBIP + ";user id=" + DBUserName + ";password=" + DBPassword + ";database=" + DBname + ";convertzerodatetime=True");
+                    dbnconnect = new MySqlConnection("server =" + DBIP + ";user id=" + DBUserName + ";password=" + DBPassword + ";database=" + DBname + ";convertzerodatetime=True"); 
 
                     dbnconnect.Open();
                     dbnconnect.ChangeDatabase(DBname);
@@ -62,7 +64,7 @@ namespace DMSAutoOrder
                     timeout++;
                     if (timeout > 10)
                     {
-                        GlobalValue.WriteLog(e.Message + "\r\n", "SQLERRORLOADTABLE.log");
+                        GlobalValue.wlog.WriteEntry("SQLERRORLOADTABLE Error:" + e.Message, EventLogEntryType.Error);
                         return null;
                     }
 
@@ -108,7 +110,8 @@ namespace DMSAutoOrder
                     trycycle++;
                     if (trycycle > 10)
                     {
-                        GlobalValue.WriteLog(e.Message + "\r\n" + sql, "SQLERRORLOADTABLE.log");
+                        GlobalValue.wlog.WriteEntry("SQLERRORLOADTABLE Error:" + e.Message, EventLogEntryType.Error);
+
                         Thread.Sleep(5);
                         //if (MSC != null)
                         //{
@@ -156,7 +159,8 @@ namespace DMSAutoOrder
                     trycycle++;
                     if (trycycle > 10)
                     {
-                        GlobalValue.WriteLog(e.Message + "\r\n" + sql, "SQLERROR.log");
+                        GlobalValue.wlog.WriteEntry("SQLERROR Error:" + e.Message, EventLogEntryType.Error);
+
                         //if (MSC!=null)
                         //{
                         //    MSC.Close();

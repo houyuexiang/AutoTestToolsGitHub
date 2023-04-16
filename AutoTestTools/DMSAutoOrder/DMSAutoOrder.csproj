@@ -108,6 +108,7 @@
     <Compile Include="ASTM.cs" />
     <Compile Include="Connect.cs" />
     <Compile Include="DMSConnector.cs" />
+    <Compile Include="DMSProcessor.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
