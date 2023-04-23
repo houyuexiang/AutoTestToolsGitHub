@@ -67,6 +67,22 @@ namespace DMSAutoOrder
                 return;
             }
         }
+        public static void WriteLog(string log, string logfile,EventLogEntryType eventLogEntry)
+        {
+            wlog.WriteEntry(log, eventLogEntry); 
+            try
+            {
+                StreamWriter sw = new StreamWriter(logfile, true);
+                sw.WriteLine(log);
+                sw.Close();
+            }
+            catch (Exception e)
+            {
+                wlog.WriteEntry(e.Message, EventLogEntryType.Error);
+                System.Console.WriteLine("Globalvalue" + e.Message);
+                return;
+            }
+        }
         public static string ReplaceASCII(string msg)
         {
             string Stemp, Sreplace;

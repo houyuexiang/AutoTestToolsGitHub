@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DMSAutoOrder
 {
@@ -222,10 +223,10 @@ namespace DMSAutoOrder
                                     sbrowobject.Append(dt.Columns[columnindex].ColumnName).Append(":").Append(dc.ToString()).Append(",");
                                     columnindex++;
                                 }
-                                GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " record {" + sbrowobject.ToString() + "} need clean...", "SystemError.log");
+                                GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " record {" + sbrowobject.ToString() + "} need clean...", AppDomain.CurrentDomain.BaseDirectory + "\\" + "SystemError.log", EventLogEntryType.Information);
                                 string excutesql = new StringBuilder("delete from ").Append(MysqlClass.DBname).Append(".").Append(r[0].ToString()).Append(" where flgrunning <> ''").ToString();
                                 MysqlClass.ExecuteSQL(excutesql);
-                                GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " clean...", "SystemError.log");
+                                GlobalValue.WriteLog("PitStopTableMonitor : Table" + r[0].ToString() + " clean...", AppDomain.CurrentDomain.BaseDirectory + "\\" + "SystemError.log", EventLogEntryType.Information);
                                 PitStopDictSum[tablename].Remove(idpitstop);
                                 idpitstoplist.Remove(idpitstop);
                             }
@@ -408,19 +409,19 @@ namespace DMSAutoOrder
         {
             string sql;
             sql = "delete from " + MysqlClass.DBname + ".orders where codoid = '" + OID + "'";
-            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog(sql + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" + "DeleteSample.log", EventLogEntryType.Information);
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".orders_details where codoid = '" + OID + "'";
-            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog(sql + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" + "DeleteSample.log", EventLogEntryType.Information);
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".orders_tat where codoid = '" + OID + "'";
-            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog(sql + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" +  "DeleteSample.log", EventLogEntryType.Information);
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".reqtest where codsid = '" + SID + "' and codtest = '" + STestCode + "'";
-            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog(sql + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" + "DeleteSample.log", EventLogEntryType.Information);
             MysqlClass.ExecuteSQL(sql);
             sql = "delete from " + MysqlClass.DBname + ".reqtestresult where codsid = '" + SID + "' and codtest = '" + STestCode + "'";
-            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog(sql + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" + "DeleteSample.log", EventLogEntryType.Information);
             MysqlClass.ExecuteSQL(sql);
         }
 
@@ -446,7 +447,7 @@ namespace DMSAutoOrder
         {
             string sql;
             sql = "delete from " + MysqlClass.DBname + ".reqtestresult where flgstatus in ('E','R','P')  or valresult1 = ''";
-            GlobalValue.WriteLog(sql + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog(sql + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" + "DeleteSample.log");
             MysqlClass.ExecuteSQL(sql);
             Thread.Sleep(20);
 
@@ -588,7 +589,7 @@ namespace DMSAutoOrder
 
         private static void DeleteSample(string sid, string oid)
         {
-            GlobalValue.WriteLog("Test Trigger DeleteSample SID:" + sid + "\r\n", "DeleteSample.log");
+            GlobalValue.WriteLog("Test Trigger DeleteSample SID:" + sid + "\r\n", AppDomain.CurrentDomain.BaseDirectory + "\\" + "DeleteSample.log", EventLogEntryType.Information);
             foreach (string sql in TableDeleteSql)
             {
                 MysqlClass.ExecuteSQL(string.Format(sql, sid, oid));
