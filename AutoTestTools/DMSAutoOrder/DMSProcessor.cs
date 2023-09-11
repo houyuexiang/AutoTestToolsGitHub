@@ -98,6 +98,8 @@ namespace DMSAutoOrder
                 iniManager.WriteString("DMS", "DeleteTableList", "reqtestresult;reqtestresultrerun;reqtestresultunsolicited;reqtestresultrejected;attach;attachrerun;orders;orders_details;orders_tat;reqtube;reqtube_details;reqtube_automation;reqtube_tat;reqtest;reqtest_tat;duplicate;duplicate_tests;awos_hl7;reqtestresult_substance;reqtestresultrerun_substance;reqtestresultunsolicited_substance;reqtestresultrejected_substance;plate_mtp;reqtestresult_aspects;reqtestresultrerun_aspects;reqtestresultunsolicited_aspects;reqtestresultrejected_aspects");
                 iniManager.WriteString("DMS", "TestTriggerSampleDeletionComment", "Recieve Test Then Delete Sample From DMS,Format: [TestName]:[DelayTimeInMinutes] ; [TN]:[TIM]");
                 iniManager.WriteString("DMS", "SendCancelMessageToAptio", "1");
+                iniManager.WriteString("DMS", "EnableCleanUnknownSample", "0");
+                iniManager.WriteString("DMS", "CleanUnknownSampleHours", "0");
             }
             catch (Exception ex) 
             {
